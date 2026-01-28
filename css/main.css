@@ -1174,17 +1174,5 @@ a:hover { color: var(--color-link-hover); }
   .wg-universe__panel { padding: var(--space-4); }
 }
 
-/* ===== Re-enable section background images (GitHub Pages) ===== */
-.section {
-  background-image: var(--bg-section-image, none);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
 
-/* Map each section to the appropriate theme variable */
-.section--hero { --bg-section-image: var(--bg-hero-image); }
-.section--about { --bg-section-image: var(--bg-about-image); }
-.section--working-groups { --bg-section-image: var(--bg-wg-image); }
-.section--grants { --bg-section-image: var(--bg-grants-image); }
 

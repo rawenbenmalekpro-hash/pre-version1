@@ -296,8 +296,8 @@ export function createChemistryWallCanvasV1(opts) {
   const ctx = canvas.getContext("2d");
   if (!ctx) throw new Error("2D context unavailable");
 
-  const ROOT_IMAGE_SRC = opts.rootImageSrc || "/images/arabidopsis_root_stained_with_pectin_probe.webp";
-  const ZOOM_IMAGE_SRC = opts.zoomImageSrc || "/images/atroot_zoom.png";
+  const ROOT_IMAGE_SRC = opts.rootImageSrc || "../images/arabidopsis_root_stained_with_pectin_probe.webp";
+  const ZOOM_IMAGE_SRC = opts.zoomImageSrc || "../images/atroot_zoom.png";
 
   let zoom = opts.zoom;
   /** @type {[number,number,number]} */ let channels = opts.channels || [1, 1, 1];

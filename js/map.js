@@ -16,8 +16,8 @@
     fitPadding: 50,
     zoom: { min: 0.5, max: 8, step: 1.5 },
     paths: {
-      topoJson: '/data/world.topojson',
-      mapData: '/content/map-data.json'
+      topoJson: '../data/world.topojson',
+      mapData: '../content/map-data.json'
     },
     marker: {
       baseRadius: 5,

@@ -52,13 +52,15 @@
   "backgroundCanvas": {
     "_comment": "Maps section IDs to a background key from backgrounds.*. If missing, fallback is section[data-bg] then 'hero'.",
     "sections": {
-      "intro": "intro",
-      "about": "about",
+      "home": "hero",
+      "learn-more": "about",
       "working-groups": "working-groups",
       "leadership": "leadership",
       "participating": "participating",
       "grants": "grants",
-      "join": "join"
+      "join": "join",
+      "credits": "about"
+      
     }
   },
   "themeOverlays": {

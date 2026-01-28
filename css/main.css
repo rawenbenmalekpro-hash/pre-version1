@@ -1173,16 +1173,3 @@ a:hover { color: var(--color-link-hover); }
 
   .wg-universe__panel { padding: var(--space-4); }
 }
-
-/* FINAL section background binding */
-.section {
-  background-image: var(--bg-section-image);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.section[data-bg="hero"]  { --bg-section-image: var(--bg-hero-image); }
-.section[data-bg="about"] { --bg-section-image: var(--bg-about-image); }
-.section[data-bg="wg"]    { --bg-section-image: var(--bg-wg-image); }
-.section[data-bg="grants"]{ --bg-section-image: var(--bg-grants-image); }

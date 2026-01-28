@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PlantWallK Settings",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["theme", "backgrounds", "meta"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "_comment": { "type": "string" },
+    "theme": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["logoColor", "accentColor"],
+      "properties": {
+        "logoColor": { "type": "string" },
+        "accentColor": { "type": "string" }
+      }
+    },
+    "backgrounds": {
+      "type": "object",
+      "description": "Background image paths keyed by name.",
+      "additionalProperties": { "type": "string" }
+    },
+    "backgroundCanvas": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "_comment": { "type": "string" },
+        "sections": {
+          "type": "object",
+          "description": "Maps section ids to background keys.",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+    "themeOverlays": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "_comment": { "type": "string" },
+        "dark": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "noiseOpacity": { "type": "number", "minimum": 0, "maximum": 0.2 }
+          }
+        },
+        "light": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "noiseOpacity": { "type": "number", "minimum": 0, "maximum": 0.2 }
+          }
+        }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["siteTitle", "siteDescription"],
+      "properties": {
+        "siteTitle": { "type": "string" },
+        "siteDescription": { "type": "string" }
+      }
+    }
+  }
+}

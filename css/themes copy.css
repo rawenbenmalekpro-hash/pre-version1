@@ -1,0 +1,295 @@
+/* css/themes.css — Milestone 5 (Matte/Frost + Editorial Paper + Microscopy Grain) */
+
+:root{
+  /* Logo (editable) */
+  --logo-color:#5f8dd3;
+
+  /* Base palette */
+  --color-white:#fff;
+  --color-black:#000;
+
+  --color-blue-50:#eff6ff;
+  --color-blue-100:#dbeafe;
+  --color-blue-200:#bfdbfe;
+  --color-blue-300:#93c5fd;
+  --color-blue-400:#60a5fa;
+  --color-blue-500:#3b82f6;
+  --color-blue-600:#2563eb;
+  --color-blue-700:#1d4ed8;
+
+  --color-gray-50:#f8fafc;
+  --color-gray-100:#f1f5f9;
+  --color-gray-200:#e2e8f0;
+  --color-gray-300:#cbd5e1;
+  --color-gray-400:#94a3b8;
+  --color-gray-500:#64748b;
+  --color-gray-600:#475569;
+  --color-gray-700:#334155;
+  --color-gray-800:#1e293b;
+  --color-gray-900:#0f172a;
+  --color-gray-950:#020617;
+
+  --color-success:#22c55e;
+  --color-warning:#eab308;
+  --color-error:#ef4444;
+
+  /* WG colors */
+  --color-wg1:#38bdf8; --color-wg1-bg:rgba(56,189,248,.12);
+  --color-wg2:#a78bfa; --color-wg2-bg:rgba(167,139,250,.12);
+  --color-wg3:#34d399; --color-wg3-bg:rgba(52,211,153,.12);
+  --color-leadership:#60a5fa;
+
+  /* Typography */
+  --font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --text-xs:.75rem; --text-sm:.875rem; --text-base:1rem; --text-lg:1.125rem;
+  --text-xl:1.25rem; --text-2xl:1.5rem; --text-3xl:1.875rem; --text-4xl:2.25rem; --text-5xl:3rem;
+  --leading-tight:1.25; --leading-normal:1.5; --leading-relaxed:1.625;
+
+  /* Spacing */
+  --space-1:.25rem; --space-2:.5rem; --space-3:.75rem; --space-4:1rem; --space-5:1.25rem; --space-6:1.5rem;
+  --space-8:2rem; --space-10:2.5rem; --space-12:3rem; --space-16:4rem; --space-20:5rem;
+
+  /* Effects */
+  --radius-sm:.25rem; --radius-md:.5rem; --radius-lg:.75rem; --radius-xl:1rem; --radius-2xl:1.5rem; --radius-full:9999px;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.40);
+  --shadow-md:0 4px 6px rgba(0,0,0,.40);
+  --shadow-lg:0 10px 15px rgba(0,0,0,.40);
+
+  /* Transitions */
+  --transition-fast:150ms ease-out;
+  --transition-base:300ms cubic-bezier(.4,0,.2,1);
+  --transition-slow:600ms cubic-bezier(.4,0,.2,1);
+  --transition-theme:400ms ease;
+  --transition-bg:1400ms cubic-bezier(.2,.9,.2,1);
+
+  /* Layout */
+  --sidebar-width:260px;
+  --content-max:1000px;
+  --header-height:60px;
+
+  /* Z */
+  --z-base:0; --z-elevated:10; --z-sticky:100; --z-overlay:200; --z-modal:300; --z-tooltip:400;
+
+  /* Legacy background vars (bg-canvas uses settings.json now) */
+  --bg-hero-image:url('/images/bg-hero.webp');
+  --bg-about-image:url('/images/bg-about.webp');
+  --bg-wg-image:url('/images/bg-wg.webp');
+  --bg-grants-image:url('/images/bg-grants.webp');
+  --bg-micro-base-a:var(--bg-hero-image);
+  --bg-micro-base-b:var(--bg-about-image);
+
+  --logo-width:180px;
+
+  /* ===== Milestone 5: Matte/Frost core tokens (mapped below) ===== */
+  --surface-blur:18px;
+  --surface-saturation:130%;
+  --surface-highlight:none;
+  --surface-grain-opacity:.045;
+
+  /* Section tint hooks (default, can be overridden per-section later) */
+  --section-tint-a:rgba(70,170,170,.14);   /* teal */
+  --section-tint-b:rgba(170,140,235,.12);  /* violet */
+  --section-tint-c:rgba(220,170,90,.08);   /* amber */
+}
+
+/* =========================
+   DARK THEME (default)
+   ========================= */
+:root,[data-theme="dark"]{
+  color-scheme:dark;
+
+  /* Ink-like base (not flat blue) */
+  --bg-page:#050814;
+  --bg-surface:rgba(10,14,24,.78);
+  --bg-surface-elevated:rgba(12,18,32,.82);
+
+  /* Links/focus keep existing accents (readability) */
+  --color-link:var(--color-blue-300);
+  --color-link-hover:var(--color-blue-200);
+  --color-focus:var(--color-blue-400);
+  --color-accent:var(--color-blue-500);
+
+  --text-primary:var(--color-gray-50);
+  --text-secondary:rgba(226,232,240,.82);
+  --text-muted:rgba(148,163,184,.58);
+
+  --border-default:rgba(148,163,184,.24);
+  --border-subtle:rgba(255,255,255,.08);
+
+  /* Matte/frost surfaces */
+  --surface-bg:rgba(10,14,24,.70);
+  --surface-border:rgba(148,163,184,.22);
+  --surface-shadow:0 22px 70px rgba(0,0,0,.60);
+  --surface-blur:18px;
+  --surface-saturation:135%;
+
+  /* Map existing vars to matte surface */
+  --glass-bg:var(--surface-bg);
+  --glass-border:rgba(255,255,255,.10);
+  --glass-blur:12px;
+
+  --bg-glass:rgba(255,255,255,.03);
+  --bg-glass-hover:rgba(255,255,255,.07);
+  --bg-glass-active:rgba(255,255,255,.10);
+
+  /* Reading surfaces */
+  --content-surface-bg:rgba(10,14,24,.74);
+  --content-surface-border:var(--surface-border);
+  --content-surface-shadow:var(--surface-shadow);
+  --content-surface-blur:18px;
+
+  /* Remove holographic sheen -> soft diffusion */
+  --content-surface-sheen:
+    radial-gradient(120% 90% at 20% 0%, rgba(255,255,255,.06) 0%, rgba(255,255,255,0) 55%),
+    radial-gradient(110% 90% at 80% 20%, rgba(120,220,200,.06) 0%, rgba(120,220,200,0) 60%);
+  --content-surface-sheen-opacity:.55;
+  --content-surface-sheen-blend:soft-light;
+
+  /* Card sheen becomes barely-there diffusion */
+  --card-sheen:
+    radial-gradient(120% 90% at 15% 0%, rgba(255,255,255,.05) 0%, rgba(255,255,255,0) 58%);
+  --card-sheen-opacity:.18;
+
+  /* Section scrim (editorial, background-harmonized) */
+  --section-scrim:
+    radial-gradient(120% 90% at 70% 0%, var(--section-tint-a) 0%, rgba(0,0,0,0) 60%),
+    radial-gradient(120% 90% at 25% 20%, var(--section-tint-b) 0%, rgba(0,0,0,0) 65%),
+    linear-gradient(180deg, rgba(3,6,14,.74) 0%, rgba(3,6,14,.44) 55%, rgba(3,6,14,.10) 100%);
+
+  /* Background overlay (keep no fixed image layer) */
+  --bg-overlay:
+    radial-gradient(110% 90% at 35% 15%, rgba(70,170,170,.12) 0%, rgba(0,0,0,0) 58%),
+    radial-gradient(110% 90% at 75% 10%, rgba(170,140,235,.10) 0%, rgba(0,0,0,0) 55%),
+    radial-gradient(100% 80% at 55% 85%, rgba(220,170,90,.06) 0%, rgba(0,0,0,0) 60%),
+    linear-gradient(180deg, rgba(3,6,14,.76) 0%, rgba(3,6,14,.48) 55%, rgba(3,6,14,.14) 100%);
+
+  /* Grain intensity (used by main.css overlay::after; token still respected) */
+  --bg-noise-opacity:var(--bg-noise-opacity-token-dark,.06);
+
+  --hero-title-shadow:0 0 30px rgba(0,0,0,.72);
+
+  /* Nav + glow: less neon, more matte */
+  --nav-hover-bg:rgba(255,255,255,.05);
+  --nav-hover-border:rgba(255,255,255,.10);
+  --nav-active-bg:rgba(90,170,210,.10);
+  --nav-active-border:rgba(140,180,230,.18);
+
+  --scrim-radial:radial-gradient(ellipse at center, rgba(0,0,0,.42) 0%, rgba(0,0,0,.82) 100%);
+  --glow-soft:0 0 18px rgba(110,200,210,.16);
+  --glow-medium:0 0 26px rgba(160,150,235,.18);
+
+  --map-water:#070d1a; --map-land:#1e293b; --map-participating:#3b82f6; --map-hover:#60a5fa; --map-stroke:#0f172a;
+  --marker-glow:rgba(59,130,246,.6); --marker-core:#60a5fa; --marker-pulse:rgba(59,130,246,.4);
+}
+
+/* =========================
+   LIGHT THEME (editorial paper)
+   ========================= */
+[data-theme="light"]{
+  color-scheme:light;
+
+  /* Paper base (not holographic) */
+  --bg-page:#f6f5f0;
+  --bg-surface:rgba(255,255,255,.78);
+  --bg-surface-elevated:rgba(255,255,255,.90);
+
+  --text-primary:#0b1220;
+  --text-secondary:rgba(11,18,32,.72);
+  --text-muted:rgba(11,18,32,.52);
+
+  --border-default:rgba(15,23,42,.18);
+  --border-subtle:rgba(15,23,42,.10);
+
+  --color-link:var(--color-blue-600);
+  --color-link-hover:var(--color-blue-700);
+  --color-focus:var(--color-blue-500);
+
+  /* Matte/frost surfaces (paper + diffusion) */
+  --surface-bg:rgba(255,255,255,.72);
+  --surface-border:rgba(15,23,42,.14);
+  --surface-shadow:0 16px 54px rgba(15,23,42,.10);
+  --surface-blur:18px;
+  --surface-saturation:118%;
+
+  --glass-bg:rgba(255,255,255,.70);
+  --glass-border:rgba(15,23,42,.10);
+  --glass-blur:12px;
+
+  --bg-glass:rgba(255,255,255,.58);
+  --bg-glass-hover:rgba(255,255,255,.74);
+  --bg-glass-active:rgba(255,255,255,.84);
+
+  --bg-filter:brightness(1.10) saturate(.95) contrast(.94);
+  --hero-title-shadow:none;
+
+  --content-surface-bg:rgba(255,255,255,.74);
+  --content-surface-border:var(--surface-border);
+  --content-surface-shadow:var(--surface-shadow);
+  --content-surface-blur:22px;
+
+  /* Remove prism/conic glare -> gentle diffusion */
+  --content-surface-sheen:
+    radial-gradient(120% 90% at 82% 0%, rgba(70,170,170,.14) 0%, rgba(70,170,170,0) 56%),
+    radial-gradient(110% 90% at 18% 18%, rgba(170,140,235,.12) 0%, rgba(170,140,235,0) 60%),
+    radial-gradient(110% 90% at 55% 85%, rgba(220,170,90,.08) 0%, rgba(220,170,90,0) 60%);
+  --content-surface-sheen-opacity:.70;
+  --content-surface-sheen-blend:soft-light;
+
+  --card-sheen:
+    radial-gradient(120% 90% at 15% 0%, rgba(255,255,255,.40) 0%, rgba(255,255,255,0) 60%),
+    radial-gradient(120% 90% at 85% 20%, rgba(70,170,170,.10) 0%, rgba(0,0,0,0) 60%);
+  --card-sheen-opacity:.32;
+
+  --section-scrim:
+    radial-gradient(120% 90% at 85% 5%, rgba(70,170,170,.10) 0%, rgba(0,0,0,0) 60%),
+    radial-gradient(110% 90% at 20% 25%, rgba(170,140,235,.09) 0%, rgba(0,0,0,0) 65%),
+    linear-gradient(135deg, rgba(246,245,240,.86) 0%, rgba(246,245,240,.46) 55%, rgba(246,245,240,.10) 100%);
+
+  /* Background overlay (no fixed image layer) */
+  --bg-overlay:
+    linear-gradient(315deg, rgba(70,170,170,.12) 0%, rgba(170,140,235,.10) 45%, rgba(220,170,90,.08) 100%),
+    radial-gradient(circle at 30% 20%, rgba(255,255,255,.22), rgba(255,255,255,0) 56%),
+    linear-gradient(135deg, rgba(246,245,240,.74) 0%, rgba(246,245,240,.32) 55%, rgba(246,245,240,.56) 100%);
+
+  --bg-noise-opacity:var(--bg-noise-opacity-token-light,.03);
+
+  --nav-hover-bg:rgba(255,255,255,.50);
+  --nav-hover-border:rgba(70,170,170,.18);
+  --nav-active-bg:rgba(70,170,170,.10);
+  --nav-active-border:rgba(170,140,235,.18);
+
+  --scrim-radial:radial-gradient(ellipse at center, rgba(0,0,0,.20) 0%, rgba(0,0,0,.50) 100%);
+  --glow-soft:0 0 18px rgba(70,170,170,.12);
+  --glow-medium:0 0 26px rgba(170,140,235,.14);
+
+  --map-water:#dff4ff; --map-land:#f6fbff; --map-participating:#7fd4e0; --map-hover:#46a6b6; --map-stroke:#9fb6c3;
+  --marker-glow:rgba(11,107,122,.34); --marker-core:#0b6b7a; --marker-pulse:rgba(11,107,122,.20);
+}
+
+/* Theme transition */
+html{transition:background-color var(--transition-theme),color var(--transition-theme);}
+html.theme-transitioning,html.theme-transitioning *{
+  transition:background-color var(--transition-theme),color var(--transition-theme),border-color var(--transition-theme),box-shadow var(--transition-theme)!important;
+}
+
+/* Dyslexia Mode (unchanged behavior) */
+.dyslexia-mode{--leading-normal:1.8;--leading-relaxed:2;}
+.dyslexia-mode body{letter-spacing:.05em;word-spacing:.12em;font-weight:450;}
+.dyslexia-mode p,.dyslexia-mode li,.dyslexia-mode td,.dyslexia-mode th{text-align:left!important;hyphens:none!important;}
+
+/* High Contrast (unchanged behavior) */
+.high-contrast{
+  --text-primary:#fff;--text-secondary:#e2e8f0;--bg-page:#000;--bg-surface:#0a0a0a;--border-default:#fff;--color-link:#60a5fa;
+}
+.high-contrast[data-theme="light"]{
+  --text-primary:#000;--text-secondary:#1e293b;--bg-page:#fff;--bg-surface:#f8fafc;--border-default:#000;
+}
+
+/* Reduced Motion (unchanged behavior) */
+@media (prefers-reduced-motion:reduce){
+  :root{--transition-fast:0ms;--transition-base:0ms;--transition-slow:0ms;--transition-theme:0ms;}
+}
+.reduce-motion,.reduce-motion *{
+  --transition-fast:0ms!important;--transition-base:0ms!important;--transition-slow:0ms!important;--transition-theme:0ms!important;
+  animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;
+}

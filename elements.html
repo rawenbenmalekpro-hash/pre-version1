@@ -1,0 +1,633 @@
+<!-- PART 1/3 — index.html (combined). Type "next" for Part 2. -->
+<!DOCTYPE html>
+<html lang="en" class="no-js" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="PlantWallK COST Action CA24116 — European network advancing plant cell wall research through integrated methods, data analysis, and modelling."
+  />
+  <title>PlantWallK · COST Action CA24116</title>
+
+  <link rel="icon" href="/images/favicon.ico" sizes="any" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="/css/themes.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/map.css" />
+
+  <!-- Small HTML-only polish for lists/details (keeps your existing CSS + themes) -->
+  <style>
+    /* Make <details> feel premium (no layout changes) */
+    details.pwk-details {
+      margin-top: var(--space-4);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      background: var(--bg-glass);
+      overflow: hidden;
+    }
+    details.pwk-details > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: var(--space-3) var(--space-4);
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      user-select: none;
+    }
+    details.pwk-details > summary::-webkit-details-marker { display: none; }
+    details.pwk-details > summary::after {
+      content: "▾";
+      opacity: .8;
+      transform: translateY(-1px);
+      transition: transform var(--transition-fast);
+    }
+    details.pwk-details[open] > summary::after { transform: rotate(180deg) translateY(1px); }
+    details.pwk-details .pwk-details__body {
+      padding: var(--space-4);
+      border-top: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+    }
+
+    /* Premium list style (replaces “cheap bullets” without touching main.css) */
+    .pwk-list {
+      list-style: none;
+      padding-left: 0;
+      margin: var(--space-3) 0 0 0;
+      display: grid;
+      gap: var(--space-2);
+    }
+    .pwk-list > li {
+      position: relative;
+      padding-left: 1.25rem;
+      color: var(--text-secondary);
+      font-size: var(--text-sm);
+      line-height: var(--leading-relaxed);
+    }
+    .pwk-list > li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 999px;
+      background: var(--color-accent);
+      box-shadow: var(--glow-soft);
+      opacity: 0.9;
+    }
+
+    .pwk-list--numbered { counter-reset: pwk; }
+    .pwk-list--numbered > li {
+      padding-left: 2.25rem;
+    }
+    .pwk-list--numbered > li::before {
+      counter-increment: pwk;
+      content: counter(pwk);
+      width: 1.5rem;
+      height: 1.5rem;
+      top: 0.18em;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--color-white);
+      border-radius: 999px;
+      background: var(--color-accent);
+    }
+
+    /* Make inline “meta” lines look consistent */
+    .pwk-meta {
+      color: var(--text-muted);
+      font-size: var(--text-sm);
+      margin-top: calc(var(--space-2) * -1);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Skip Links -->
+  <div class="skip-links">
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <a href="#nav" class="skip-link">Skip to navigation</a>
+  </div>
+
+  <!-- Background Canvas (continuous, no seams) -->
+  <div id="bg-canvas" class="bg-canvas" aria-hidden="true">
+    <div class="bg-layer bg-layer--a"></div>
+    <div class="bg-layer bg-layer--b"></div>
+    <div class="bg-canvas__overlay"></div>
+  </div>
+
+  <!-- V3 Layout -->
+  <div class="layout">
+    <!-- Sidebar (desktop) -->
+    <aside class="sidebar" id="nav">
+      <div class="sidebar__header">
+        <a href="#intro" class="site-logo">
+          <div class="site-logo__img">
+            <img src="/images/logo.svg" alt="PlantWallK" width="160" height="160" />
+          </div>
+        </a>
+
+        <a href="https://www.cost.eu/actions/CA24116/" target="_blank" rel="noopener noreferrer" class="cost-cta">
+          Official COST Action page ↗
+        </a>
+
+        <nav class="sidebar__socials" aria-label="PlantWallK social links">
+          <a class="site-footer__social" href="#" target="_blank" rel="noopener noreferrer" aria-label="PlantWallK on Bluesky">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6.2 3.6C8.4 5.2 10.8 8.4 12 10.3C13.2 8.4 15.6 5.2 17.8 3.6C19.4 2.5 22 1.6 22 4.4C22 5 21.7 9.1 21.5 9.8C20.8 12.2 18.2 12.8 15.8 12.4C20 13.1 21.1 15.5 18.8 17.9C14.4 22.4 12.5 16.8 12 15.3C11.9 15 11.8 14.9 12 15.3C11.5 16.8 9.6 22.4 5.2 17.9C2.9 15.5 4 13.1 8.2 12.4C5.8 12.8 3.2 12.2 2.5 9.8C2.3 9.1 2 5 2 4.4C2 1.6 4.6 2.5 6.2 3.6Z" fill="currentColor"/>
+            </svg>
+          </a>
+
+          <a class="site-footer__social" href="#" target="_blank" rel="noopener noreferrer" aria-label="PlantWallK on Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Z" stroke="currentColor" stroke-width="2"/>
+              <path d="M12 16.2a4.2 4.2 0 1 0 0-8.4a4.2 4.2 0 0 0 0 8.4Z" stroke="currentColor" stroke-width="2"/>
+              <path d="M17.4 6.6h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </a>
+
+          <a class="site-footer__social" href="#" target="_blank" rel="noopener noreferrer" aria-label="PlantWallK on LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6.5 9.5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M6.5 6.2h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+              <path d="M10.2 19v-5.4c0-1.9 1.1-3.2 3-3.2c1.8 0 2.6 1.3 2.6 3.2V19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M10.2 9.5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </a>
+        </nav>
+      </div>
+
+      <nav class="sidebar__nav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="#intro" class="nav-link nav-link--active">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#learn-more" class="nav-link">Learn More</a></li>
+          <li><a href="#working-groups" class="nav-link">Working Groups</a></li>
+          <li><a href="#leadership" class="nav-link">Leadership</a></li>
+          <!-- Member button restored -->
+          <li><a href="#participating" class="nav-link">Members</a></li>
+          <li><a href="#grants-calls" class="nav-link">Grants &amp; Calls</a></li>
+          <li><a href="#activities" class="nav-link">Activities</a></li>
+          <li><a href="#news" class="nav-link">News</a></li>
+          <li><a href="#join" class="nav-link">Join</a></li>
+          <li><a href="#credits" class="nav-link">Credits</a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar__controls">
+        <button class="control-btn" data-theme-toggle aria-label="Switch to light mode">
+          <span class="control-btn__icon">☀️</span>
+          <span class="control-btn__text">Light</span>
+        </button>
+        <button class="control-btn" data-a11y-toggle aria-label="Accessibility options">
+          <span class="control-btn__icon">♿</span>
+          <span class="control-btn__text">Accessibility</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+      <a href="#intro" class="mobile-logo">
+        <img src="/images/logo.svg" alt="PlantWallK" class="mobile-logo__img" />
+      </a>
+      <div style="display:flex;gap:var(--space-2)">
+        <button class="control-btn" data-theme-toggle aria-label="Toggle theme">
+          <span class="control-btn__icon">☀️</span>
+        </button>
+        <button class="mobile-menu-btn" aria-expanded="false" aria-controls="mobile-nav">
+          <span>Menu</span>
+          <span class="mobile-menu-btn__icon" aria-hidden="true">▼</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav id="mobile-nav" class="mobile-nav" hidden aria-label="Mobile navigation">
+      <ul class="mobile-nav__list">
+        <li><a href="#intro" class="mobile-nav__link">Home</a></li>
+        <li><a href="#about" class="mobile-nav__link">About</a></li>
+        <li><a href="#learn-more" class="mobile-nav__link">Learn More</a></li>
+        <li><a href="#working-groups" class="mobile-nav__link">Working Groups</a></li>
+        <li><a href="#leadership" class="mobile-nav__link">Leadership</a></li>
+        <!-- Member button restored -->
+        <li><a href="#participating" class="mobile-nav__link">Members</a></li>
+        <li><a href="#grants-calls" class="mobile-nav__link">Grants &amp; Calls</a></li>
+        <li><a href="#activities" class="mobile-nav__link">Activities</a></li>
+        <li><a href="#news" class="mobile-nav__link">News</a></li>
+        <li><a href="#join" class="mobile-nav__link">Join</a></li>
+        <li><a href="#credits" class="mobile-nav__link">Credits</a></li>
+        <li>
+          <a href="https://www.cost.eu/actions/CA24116/" target="_blank" rel="noopener noreferrer" class="mobile-nav__link mobile-nav__link--cta">
+            Official COST Action page ↗
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content" class="main-content">
+
+      <!-- Hero / Intro -->
+      <section id="intro" class="section section--hero" data-bg="hero" data-section="home">
+        <div class="section__inner">
+          <div class="content-surface content-surface--hero">
+            <p class="hero__kicker">
+              <a href="https://www.cost.eu/actions/CA24116/" target="_blank" rel="noopener noreferrer">
+                PLANTWALLK · COST ACTION CA24116
+              </a>
+            </p>
+
+            <h1 class="hero__title">Advancing Plant Cell Wall Knowledge.</h1>
+
+            <p class="hero__lead" data-field="lead">
+              PlantWallK brings together researchers from imaging, chemistry, biophysics, computation and modelling to overcome fragmented knowledge and methods.
+            </p>
+
+            <div class="hero__cta">
+              <a href="#learn-more" class="btn btn--primary btn--large">Learn more</a>
+              <a href="#participating" class="btn btn--secondary btn--large">Members</a>
+              <a href="#join" class="btn btn--secondary btn--large">How to join</a>
+            </div>
+
+            <!-- Optional: keep a premium “about” teaser on the landing without duplicating the full About section -->
+            <div class="glass-card" style="margin-top:var(--space-6)">
+              <h3 style="margin-bottom:var(--space-3)">About PlantWallK</h3>
+              <p data-field="about_p1">
+                Plant cell walls are essential for plant development and survival, providing plants with numerous key functions. Beyond their biological role, cell walls represent a major carbon sink and a key renewable resource for food, feed, materials, and bioenergy.
+              </p>
+              <p data-field="about_p2">
+                Although our understanding of this complex and dynamic system has greatly advanced, important knowledge gaps remain, which limits the effective use of plant cell walls.
+              </p>
+              <p data-field="about_p3">
+                The Action brings together researchers from imaging, chemistry, biophysics, computation and modelling to overcome fragmented knowledge and methods. Multidisciplinary cooperation of PlantWallK aims to improve how we visualise, analyse and simulate cell walls, build shared data and knowledge infrastructure, and create a common language for this community.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section id="about" class="section" data-bg="about" data-section="about">
+        <div class="section__inner">
+          <div class="content-surface">
+            <h2>About PlantWallK</h2>
+            <p data-field="p1">
+              Plant cell walls are essential for plant development and survival, providing plants with numerous key functions. Beyond their biological role, cell walls represent a major carbon sink and a key renewable resource for food, feed, materials, and bioenergy.
+            </p>
+            <p data-field="p2">
+              Although our understanding of this complex and dynamic system has greatly advanced, important knowledge gaps remain, which limits the effective use of plant cell walls.
+            </p>
+            <p data-field="p3">
+              The Action brings together researchers from imaging, chemistry, biophysics, computation and modelling to overcome fragmented knowledge and methods. Multidisciplinary cooperation of PlantWallK aims to improve how we visualise, analyse and simulate cell walls, build shared data and knowledge infrastructure, and create a common language for this community.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Learn more -->
+      <section id="learn-more" class="section" data-bg="about" data-section="learn-more">
+        <div class="section__inner">
+          <div class="content-surface content-surface--wide">
+            <h2>Learn more</h2>
+            <p class="pwk-meta">Reference information about the Action (content-first, readable, and styled).</p>
+
+            <div class="grant-cards" aria-label="Mission scope instruments">
+              <article class="grant-card">
+                <h3 style="margin-bottom:var(--space-2)">Mission</h3>
+                <details class="pwk-details">
+                  <summary>Open</summary>
+                  <div class="pwk-details__body">
+                    <p>
+                      PlantWallK is dedicated to overcome fragmented expertise by weaving together methods, image analysis and multiscale modelling into a coordinated European network on plant cell walls.
+                    </p>
+                  </div>
+                </details>
+              </article>
+
+              <article class="grant-card">
+                <h3 style="margin-bottom:var(--space-2)">Scope</h3>
+                <details class="pwk-details">
+                  <summary>Open</summary>
+                  <div class="pwk-details__body">
+                    <p>
+                      Scope text will follow the official Memorandum of Understanding and COST documentation for CA24116.
+                      (If you paste the official scope/objectives text from the COST page, we can replace this block verbatim.)
+                    </p>
+                  </div>
+                </details>
+              </article>
+
+              <article class="grant-card">
+                <h3 style="margin-bottom:var(--space-2)">Instruments</h3>
+                <details class="pwk-details">
+                  <summary>Open</summary>
+                  <div class="pwk-details__body">
+                    <p>
+                      Meetings, STSMs, training schools, workshops and shared protocols help the community adopt state-of-the-art tools and build lasting collaborations.
+                    </p>
+                  </div>
+                </details>
+              </article>
+            </div>
+
+            <div class="glass-card" style="margin-top:var(--space-6)">
+              <h3 style="margin-bottom:var(--space-3)">Objectives</h3>
+              <p>
+                Objectives will be listed here from the official COST Action CA24116 documentation (MoU Objectives and SC recommendations).
+                If you paste the final objectives text, we will insert it verbatim.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Working Groups -->
+      <section id="working-groups" class="section" data-bg="workingGroups" data-section="working-groups">
+        <div class="section__inner">
+          <div class="content-surface content-surface--wide">
+            <h2>Working Groups</h2>
+            <p class="pwk-meta">Click “WG details” for readable info. “Open lab universe” keeps the interactive experience.</p>
+
+            <div class="wg-grid wg-grid--lab-universes">
+              <!-- WG1 -->
+              <article class="wg-card" id="wg1">
+                <span class="wg-badge wg-badge--wg1" aria-label="Working Group 1">WG1</span>
+                <h3 class="wg-card__title">Cell wall analysis methods and probes</h3>
+                <p class="wg-card__summary">
+                  Advancing methodologies for analyzing the mechanical and biochemical properties of plant cell walls.
+                </p>
+
+                <details class="pwk-details">
+                  <summary>WG1 details</summary>
+                  <div class="pwk-details__body">
+                    <p>
+                      The working group focuses on advancing methodologies for analyzing the mechanical and biochemical properties of plant cell walls. It promotes the development, evaluation, and integration of innovative techniques through interdisciplinary collaboration, including conferences, workshops, training activities, and short-term scientific missions. As a central pillar of the Action, its progress underpins the effectiveness and impact of all other working groups.
+                    </p>
+
+                    <h4 style="margin-top:var(--space-5);margin-bottom:var(--space-2)">Main tasks</h4>
+                    <ol class="pwk-list pwk-list--numbered">
+                      <li>Create a comprehensive, standardized inventory of existing methods for mechanical and biochemical cell wall analysis, including imaging, analytical techniques, and molecular recognition tools, with emphasis on quantitative, reproducible approaches applicable to plant and crop materials.</li>
+                      <li>Identify methodological gaps and introduce novel approaches, particularly in situ and in vivo measurement techniques, by transferring suitable methods from other research fields such as biomedical and material sciences.</li>
+                      <li>Establish a sustainable framework for developing and validating new tools, including imaging strategies and molecular probes, supported by coordinated STSMs, joint grant applications, open data repositories, and hands-on training to enable long-term adoption by the scientific community.</li>
+                      <li>Monitor, document, and disseminate progress in method development by compiling validated and emerging techniques into an openly accessible, continuously updated database hosted on the Action website, thereby supporting future experimental practice and broad community uptake.</li>
+                    </ol>
+
+                    <h4 style="margin-top:var(--space-5);margin-bottom:var(--space-2)">WG leaders</h4>
+                    <ul class="pwk-list">
+                      <li><strong>Aline Voxeur</strong> — WG1 Leader</li>
+                    </ul>
+
+                    <p class="pwk-meta" style="margin-top:var(--space-4)">
+                      Country participation and snapshots are shown in the Members section (countries-only).
+                    </p>
+                  </div>
+                </details>
+
+                <button class="wg-card__toggle" type="button" aria-expanded="false" data-universe-toggle="wg1">
+                  <span class="wg-card__toggle-label">Open lab universe</span>
+                  <span class="wg-card__toggle-hint">Microscopy experiment</span>
+                </button>
+
+                <!-- WG1 Microscopy Universe -->
+                <div class="wg-universe wg-universe--microscopy" data-universe-id="wg1-microscopy" hidden>
+                  <div class="wg-universe__shell">
+                    <div class="wg-universe__visual">
+                      <div class="wg-universe__canvas" data-universe-canvas aria-hidden="true"></div>
+                    </div>
+
+                    <div class="wg-universe__panel">
+                      <p class="wg-universe__eyebrow">Lab experience · WG1</p>
+                      <p class="wg-universe__title">Sweep a confocal plane through a wall cross-section.</p>
+                      <p class="wg-universe__copy">
+                        Drag the slider to move an optical section through a stylised wall. Brighter bands hint at regions where probes
+                        bind more strongly, like tuning gain on a real microscope.
+                      </p>
+
+                      <label class="wg-universe__control">
+                        <span class="wg-universe__control-label">Optical section depth</span>
+                        <input
+                          type="range"
+                          min="0"
+                          max="100"
+                          value="55"
+                          class="wg-universe__slider"
+                          data-universe-control="wg1-intensity"
+                          aria-label="Adjust optical section depth in the virtual microscope"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- WG2 -->
+              <article class="wg-card" id="wg2">
+                <span class="wg-badge wg-badge--wg2" aria-label="Working Group 2">WG2</span>
+                <h3 class="wg-card__title">Advanced computing tools in image and data analysis</h3>
+                <p class="wg-card__summary">
+                  Advanced image and data analysis for cell wall research, with strong emphasis on deep learning.
+                </p>
+
+                <details class="pwk-details">
+                  <summary>WG2 details</summary>
+                  <div class="pwk-details__body">
+                    <p>
+                      The working group focuses on the development and dissemination of advanced image and data analysis methodologies for plant cell wall research, with a strong emphasis on deep learning–based approaches. It promotes the adoption of these methods through interdisciplinary collaboration, inventories of existing tools, workshops, and coordinated engagement with analysis specialists and research infrastructures. In parallel, it aims to build long-term expertise by training and integrating early-career researchers in modern computational analysis strategies.
+                    </p>
+
+                    <h4 style="margin-top:var(--space-5);margin-bottom:var(--space-2)">Main tasks</h4>
+                    <ol class="pwk-list pwk-list--numbered">
+                      <li>Map and consolidate existing image and data analysis approaches used in plant cell wall research by organizing an interdisciplinary conference involving tool developers, deep learning specialists, research infrastructures, and industry stakeholders.</li>
+                      <li>Identify analytical gaps and implement novel computational strategies by coordinating collaborations with mathematicians, data scientists, and image analysis experts, and translating these strategies into targeted, community-oriented workshops.</li>
+                    </ol>
+
+                    <h4 style="margin-top:var(--space-5);margin-bottom:var(--space-2)">WG leaders</h4>
+                    <ul class="pwk-list">
+                      <li><strong>Stéphane Verger</strong> — WG2 Leader</li>
+                    </ul>
+
+                    <p class="pwk-meta" style="margin-top:var(--space-4)">
+                      Country participation and snapshots are shown in the Members section (countries-only).
+                    </p>
+                  </div>
+                </details>
+
+                <button class="wg-card__toggle" type="button" aria-expanded="false" data-universe-toggle="wg2">
+                  <span class="wg-card__toggle-label">Open lab universe</span>
+                  <span class="wg-card__toggle-hint">Chemistry &amp; computing experiment</span>
+                </button>
+
+                <!-- WG2 Chemistry Universe -->
+                <div class="wg-universe wg-universe--chemistry" data-universe-id="wg2-chemistry" hidden>
+                  <div class="wg-universe__shell">
+                    <div class="wg-universe__visual">
+                      <div class="wg-chemistry-scope" aria-hidden="true">
+                        <div class="wg-chemistry__zoom-wrap" data-wg2-zoom-wrap>
+                          <div
+                            class="wg-chemistry__zoom-bg"
+                            data-wg2-zoom-bg
+                            style="background-image: url('/images/arabidopsis_root_stained_with_pectin_probe.webp');"
+                            aria-hidden="true"
+                          ></div>
+
+                          <div class="wg-chemistry__layer" data-chem-layer>
+                            <canvas class="wg-chemistry__canvas" data-chem-canvas aria-hidden="true"></canvas>
+                          </div>
+
+                          <div class="wg-chemistry__vignette" aria-hidden="true"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="wg-universe__panel">
+                      <p class="wg-universe__eyebrow">Lab experience · WG2</p>
+                      <p class="wg-universe__title">Zoom from a wall patch into a chemistry universe.</p>
+                      <p class="wg-universe__copy">
+                        Start at a blurred Arabidopsis wall. As you crank the zoom, the image fades into an abstract field of cellulose
+                        bundles and metabolites, echoing how advanced algorithms reinterpret fluorescence data.
+                      </p>
+
+                      <div class="wg-universe__control">
+                        <span class="wg-universe__control-label">Zoom into the wall (1× → 50×)</span>
+                        <div class="wg-universe__range-row">
+                          <input
+                            type="range"
+                            min="1"
+                            max="50"
+                            value="8"
+                            class="wg-universe__slider"
+                            data-chem-zoom
+                            aria-label="Zoom into the chemistry view from 1× to 50×"
+                          />
+                          <span class="wg-universe__range-value" data-chem-zoom-label>8×</span>
+                        </div>
+                      </div>
+
+                      <div class="wg-universe__control-group" aria-label="Emphasise chemistry layers">
+                        <label class="wg-universe__check">
+                          <input type="checkbox" data-chem-ch="bundles" checked />
+                          <span>Bundles</span>
+                        </label>
+                        <label class="wg-universe__check">
+                          <input type="checkbox" data-chem-ch="primary" checked />
+                          <span>Primary</span>
+                        </label>
+                        <label class="wg-universe__check">
+                          <input type="checkbox" data-chem-ch="secondary" checked />
+                          <span>Secondary</span>
+                        </label>
+                      </div>
+
+                      <p class="wg-universe__copy wg-universe__copy--secondary">
+                        Drag the zoom to control the transition yourself. Toggle the views to feel what denoising, segmentation and
+                        feature extraction do to the same underlying signal.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- WG3 -->
+              <article class="wg-card" id="wg3">
+                <span class="wg-badge wg-badge--wg3" aria-label="Working Group 3">WG3</span>
+                <h3 class="wg-card__title">Interdisciplinary approach for multiscale modeling</h3>
+                <p class="wg-card__summary">
+                  Advancing multiscale, data-driven modelling through interdisciplinary collaboration.
+                </p>
+
+                <details class="pwk-details">
+                  <summary>WG3 details</summary>
+                  <div class="pwk-details__body">
+                    <p>
+                      Working Group 3 focuses on advancing multiscale, data-driven modeling in plant cell wall research through strong interdisciplinary collaboration. It brings together expertise from biology, biochemistry, physics, mathematics, and computational sciences to address challenges related to complex multimodal datasets. Through coordinated discussions, conferences, training activities, and joint grant development, WG3 aims to establish a sustainable interdisciplinary community with long-term impact beyond the Action.
+                    </p>
+
+                    <h4 style="margin-top:var(--space-5);margin-bottom:var(--space-2)">Main tasks</h4>
+                    <ol class="pwk-list pwk-list--numbered">
+                      <li>Facilitate effective dialogue between experimental and modeling communities by presenting complex multiscale imaging data to mathematicians and computer scientists and jointly identifying modeling solutions relevant to plant cell wall research.</li>
+                      <li>Strengthen integration between biologists and modeling experts through a structured STSM program that promotes knowledge exchange and the development of new multiscale modeling modules.</li>
+                      <li>Address infrastructural challenges related to big data handling, including computational capacity and large-scale data storage, by defining strategic solutions in collaboration with European research infrastructures such as EOSC and Euro-Bioimaging.</li>
+                      <li>Build long-term modeling competence through education and training, by developing an interactive interdisciplinary course for undergraduate and graduate students focused on multiscale data evaluation and big data analysis in cell wall research.</li>
+                    </ol>
+
+                    <h4 style="margin-top:var(--space-5);margin-bottom:var(--space-2)">WG leaders</h4>
+                    <ul class="pwk-list">
+                      <li><strong>Dorota Kwiatkowska</strong> — WG3 Leader</li>
+                      <li><strong>Grégory Mouille</strong> — WG3 Co-Leader</li>
+                    </ul>
+
+                    <p class="pwk-meta" style="margin-top:var(--space-4)">
+                      Country participation and snapshots are shown in the Members section (countries-only).
+                    </p>
+                  </div>
+                </details>
+
+                <button class="wg-card__toggle" type="button" aria-expanded="false" data-universe-toggle="wg3">
+                  <span class="wg-card__toggle-label">Open lab universe</span>
+                  <span class="wg-card__toggle-hint">Modelling experiment</span>
+                </button>
+
+                <!-- WG3 Modelling Universe -->
+                <div class="wg-universe wg-universe--modelling" data-universe-id="wg3-modelling" hidden>
+                  <div class="wg-universe__shell">
+                    <div class="wg-universe__visual">
+                      <div class="wg-universe__canvas" data-universe-canvas aria-hidden="true"></div>
+                    </div>
+
+                    <div class="wg-universe__panel">
+                      <p class="wg-universe__eyebrow">Lab experience · WG3</p>
+                      <p class="wg-universe__title">Push a virtual wall patch into the non-linear regime.</p>
+                      <p class="wg-universe__copy">
+                        Increase the applied stress and watch the contours and mesh distort. It’s a simplified echo of finite-element
+                        models used to bridge wall structure and mechanics.
+                      </p>
+
+                      <label class="wg-universe__control">
+                        <span class="wg-universe__control-label">Applied stress</span>
+                        <input
+                          type="range"
+                          min="0"
+                          max="100"
+                          value="35"
+                          class="wg-universe__slider"
+                          data-universe-control="wg3-stress"
+                          aria-label="Adjust applied stress in the modelling experiment"
+                        />
+                      </label>
+
+                      <p class="wg-universe__copy wg-universe__copy--secondary">
+                        Low values keep the field neat. As you approach the upper range, the simulated deformation field becomes
+                        more complex, hinting at buckling, strain localisation and other non-linear responses.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- (Part 2 continues with Leadership, Members map/table, Grants & Calls, Activities, News, Join, Credits, A11y, Footer, scripts) -->
+
+    </main>
+  </div>
+
+  <!-- Accessibility Panel / Footer / Scripts are included in Part 3 to keep this readable -->
+</body>
+</html>

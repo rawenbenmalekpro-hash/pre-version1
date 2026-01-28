@@ -1,0 +1,73 @@
+{
+  "$schema": "./settings-schema.json",
+  "_comment": "Site configuration - editable via /admin",
+  "theme": {
+    "logoColor": "#5f8dd3",
+    "accentColor": "#3b82f6"
+  },
+  "backgrounds": {
+    "_comment": "Theme-aware background map. Section-id keys are primary contract. Legacy keys are kept for back-compat (hero/about/workingGroups/grants).",
+    "dark": {
+      "_comment": "Dark theme backgrounds (milestone 4 assets).",
+      "intro": "/images/pea_root_cap.webp",
+      "about": "/images/micrasterias_cos_488_1_day_post_label.webp",
+      "working-groups": "/images/cover_art_pea_root_apex.webp",
+      "leadership": "/images/arabidopsis_root_stained_with_pectin_probe.webp",
+      "participating": "/images/pea_root_cap.webp",
+      "grants": "/images/micrasterias_cos_488_1_day_post_label.webp",
+      "join": "/images/cover_art_pea_root_apex.webp",
+
+      "hero": "/images/pea_root_cap.webp",
+      "about-section": "/images/micrasterias_cos_488_1_day_post_label.webp",
+      "grants-section": "/images/arabidopsis_root_stained_with_pectin_probe.webp",
+      "workingGroups": "/images/cover_art_pea_root_apex.webp"
+    },
+    "light": {
+      "_comment": "Light theme backgrounds (milestone 4 assets).",
+      "intro": "/images/linum_stem_20x.webp",
+      "about": "/images/sambucus_nigra_elderbery.webp",
+      "working-groups": "/images/toluidine_blue_cassava.webp",
+      "leadership": "/images/linum_stem_20x.webp",
+      "participating": "/images/sambucus_nigra_elderbery.webp",
+      "grants": "/images/toluidine_blue_cassava.webp",
+      "join": "/images/linum_stem_20x.webp",
+
+      "hero": "/images/linum_stem_20x.webp",
+      "about-section": "/images/sambucus_nigra_elderbery.webp",
+      "grants-section": "/images/toluidine_blue_cassava.webp",
+      "workingGroups": "/images/toluidine_blue_cassava.webp"
+    },
+    "_legacyFlat": {
+      "_comment": "Back-compat for older code paths that expect backgrounds[key] (milestone 4: point to safe defaults). Prefer backgrounds.dark/light.",
+      "hero": "/images/pea_root_cap.webp",
+      "about": "/images/micrasterias_cos_488_1_day_post_label.webp",
+      "workingGroups": "/images/cover_art_pea_root_apex.webp",
+      "grants": "/images/arabidopsis_root_stained_with_pectin_probe.webp"
+    }
+  },
+  "meta": {
+    "siteTitle": "PlantWallK · COST Action CA24116",
+    "siteDescription": "Multidisciplinary consortium to accelerate plant cell wall knowledge"
+  },
+  "backgroundCanvas": {
+    "_comment": "Maps section IDs to a background key from backgrounds.*. If missing, fallback is section[data-bg] then 'hero'.",
+    "sections": {
+      "intro": "intro",
+      "about": "about",
+      "working-groups": "working-groups",
+      "leadership": "leadership",
+      "participating": "participating",
+      "grants": "grants",
+      "join": "join"
+    }
+  },
+  "themeOverlays": {
+    "_comment": "Optional knobs consumed by CSS vars; keep subtle for readability.",
+    "dark": {
+      "noiseOpacity": 0.05
+    },
+    "light": {
+      "noiseOpacity": 0.02
+    }
+  }
+}

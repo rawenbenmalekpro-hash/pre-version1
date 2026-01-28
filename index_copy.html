@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PlantWallK COST Action CA24116 - Multidisciplinary consortium advancing plant cell wall knowledge through imaging, chemistry, and computational modeling.">
+  <title>PlantWallK · COST Action CA24116</title>
+
+  <link rel="icon" href="/images/favicon.ico" sizes="any">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/themes.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/map.css">
+</head>
+
+<body>
+  <!-- Skip Links -->
+  <div class="skip-links">
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <a href="#nav" class="skip-link">Skip to navigation</a>
+  </div>
+
+  <!-- Background Canvas (continuous, no seams) -->
+  <div id="bg-canvas" class="bg-canvas" aria-hidden="true">
+    <div class="bg-layer bg-layer--a"></div>
+    <div class="bg-layer bg-layer--b"></div>
+    <div class="bg-canvas__overlay"></div>
+  </div>
+
+  <!-- V3 Layout -->
+  <div class="layout">
+    <!-- Sidebar (desktop) -->
+    <aside class="sidebar" id="nav">
+      <div class="sidebar__header">
+        <a href="#intro" class="site-logo">
+          <div class="site-logo__img">
+            <img src="/images/logo.svg" alt="PlantWallK" width="160" height="160">
+          </div>
+        </a>
+
+        <a href="https://www.cost.eu/actions/CA24116/" target="_blank" rel="noopener noreferrer" class="cost-cta">
+          Official COST Action page ↗
+        </a>
+
+        <nav class="sidebar__socials" aria-label="PlantWallK social links">
+  <a class="site-footer__social" href="#" target="_blank" rel="noopener noreferrer" aria-label="PlantWallK on Bluesky">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M6.2 3.6C8.4 5.2 10.8 8.4 12 10.3C13.2 8.4 15.6 5.2 17.8 3.6C19.4 2.5 22 1.6 22 4.4C22 5 21.7 9.1 21.5 9.8C20.8 12.2 18.2 12.8 15.8 12.4C20 13.1 21.1 15.5 18.8 17.9C14.4 22.4 12.5 16.8 12 15.3C11.9 15 11.8 14.9 12 15.3C11.5 16.8 9.6 22.4 5.2 17.9C2.9 15.5 4 13.1 8.2 12.4C5.8 12.8 3.2 12.2 2.5 9.8C2.3 9.1 2 5 2 4.4C2 1.6 4.6 2.5 6.2 3.6Z" fill="currentColor"/>
+    </svg>
+  </a>
+
+  <a class="site-footer__social" href="#" target="_blank" rel="noopener noreferrer" aria-label="PlantWallK on Instagram">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Z" stroke="currentColor" stroke-width="2"/>
+      <path d="M12 16.2a4.2 4.2 0 1 0 0-8.4a4.2 4.2 0 0 0 0 8.4Z" stroke="currentColor" stroke-width="2"/>
+      <path d="M17.4 6.6h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+  </a>
+
+  <a class="site-footer__social" href="#" target="_blank" rel="noopener noreferrer" aria-label="PlantWallK on LinkedIn">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M6.5 9.5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M6.5 6.2h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <path d="M10.2 19v-5.4c0-1.9 1.1-3.2 3-3.2c1.8 0 2.6 1.3 2.6 3.2V19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M10.2 9.5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </a>
+</nav>
+
+      </div>
+
+      <nav class="sidebar__nav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="#intro" class="nav-link nav-link--active">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#working-groups" class="nav-link">Working Groups</a></li>
+          <li><a href="#leadership" class="nav-link">Leadership</a></li>
+          <li><a href="#participating" class="nav-link">Members</a></li>
+          <li><a href="#grants" class="nav-link">Grants</a></li>
+          <li><a href="#news" class="nav-link">News</a></li>
+          <li><a href="#join" class="nav-link">Join</a></li>
+          <li><a href="#credits" class="nav-link">Credits</a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar__controls">
+        <button class="control-btn" data-theme-toggle aria-label="Switch to light mode">
+          <span class="control-btn__icon">☀️</span>
+          <span class="control-btn__text">Light</span>
+        </button>
+        <button class="control-btn" data-a11y-toggle aria-label="Accessibility options">
+          <span class="control-btn__icon">♿</span>
+          <span class="control-btn__text">Accessibility</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+      <a href="#intro" class="mobile-logo">
+        <img src="/images/logo.svg" alt="PlantWallK" class="mobile-logo__img">
+      </a>
+      <div style="display:flex;gap:var(--space-2)">
+        <button class="control-btn" data-theme-toggle aria-label="Toggle theme">
+          <span class="control-btn__icon">☀️</span>
+        </button>
+        <button class="mobile-menu-btn" aria-expanded="false" aria-controls="mobile-nav">
+          <span>Menu</span>
+          <span class="mobile-menu-btn__icon" aria-hidden="true">▼</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav id="mobile-nav" class="mobile-nav" hidden aria-label="Mobile navigation">
+      <ul class="mobile-nav__list">
+        <li><a href="#intro" class="mobile-nav__link">Home</a></li>
+        <li><a href="#about" class="mobile-nav__link">About</a></li>
+        <li><a href="#working-groups" class="mobile-nav__link">Working Groups</a></li>
+        <li><a href="#leadership" class="mobile-nav__link">Leadership</a></li>
+        <li><a href="#participating" class="mobile-nav__link">Members</a></li>
+        <li><a href="#grants" class="mobile-nav__link">Grants</a></li>
+        <li><a href="#news" class="nav-link">News</a></li>
+        <li><a href="#join" class="mobile-nav__link">Join</a></li>
+        <li><a href="#credits" class="mobile-nav__link">Credits</a></li>
+        <li>
+          <a href="https://www.cost.eu/actions/CA24116/" target="_blank" rel="noopener noreferrer" class="mobile-nav__link mobile-nav__link--cta">
+            Official COST Action page ↗
+          </a>
+          
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content" class="main-content">
+      <!-- Hero / Intro -->
+      <section id="intro" class="section section--hero" data-bg="hero">
+        <div class="section__inner">
+          <div class="content-surface content-surface--hero">
+            <p class="hero__kicker">PlantwallK · COST Action CA24116</p>
+            <h1 class="hero__title">Advancing Plant Cell Wall Knowledge.</h1>
+            <p class="hero__lead">
+              PlantWallK brings together researchers from imaging, chemistry, biophysics, computation and modelling to overcome fragmented knowledge and advance our understanding of plant cell walls.
+            </p>
+            <div class="hero__cta">
+              <a href="#about" class="btn btn--primary btn--large">Learn More</a>
+              <a href="#join" class="btn btn--secondary btn--large">Join the Action</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section id="about" class="section" data-bg="about">
+        <div class="section__inner">
+          <div class="content-surface">
+            <h2>About PlantWallK</h2>
+            <p>Plant cell walls are essential for plant development and survival, providing plants with numerous key functions. Beyond their biological role, cell walls represent a major carbon sink and a key renewable resource for food, feed, materials, and bioenergy.</p>
+            <p>Although our understanding of this complex and dynamic system has greatly advanced, important knowledge gaps remain, which limits the effective use of plant cell walls.</p>
+            <p>The Action brings together researchers from imaging, chemistry, biophysics, computation and modelling to overcome fragmented knowledge and methods. Multidisciplinary cooperation of PlantWallK aims to improve how we visualise, analyse and simulate cell walls, build shared data and knowledge infrastructure, and create a common language for this community.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Working Groups -->
+      <section id="working-groups" class="section" data-bg="workingGroups">
+        <div class="section__inner">
+          <div class="content-surface content-surface--wide">
+            <h2>Working Groups</h2>
+
+            <div class="wg-grid wg-grid--lab-universes">
+              <!-- WG1 -->
+              <article class="wg-card" id="wg1">
+                <span class="wg-badge wg-badge--wg1">WG1</span>
+                <h3 class="wg-card__title">Cell Wall Analysis Methods and Probes</h3>
+                <p class="wg-card__summary">
+                  Advancing methodologies for analysing the mechanical and biochemical properties of plant cell walls through interdisciplinary collaboration.
+                </p>
+
+                <button class="wg-card__toggle" type="button" aria-expanded="false" data-universe-toggle="wg1">
+                  <span class="wg-card__toggle-label">Open lab universe</span>
+                  <span class="wg-card__toggle-hint">Microscopy experiment</span>
+                </button>
+
+                <!-- WG1 Microscopy Universe -->
+                <div class="wg-universe wg-universe--microscopy" data-universe-id="wg1-microscopy" hidden>
+                  <div class="wg-universe__shell">
+                    <div class="wg-universe__visual">
+                      <div class="wg-universe__canvas" data-universe-canvas aria-hidden="true"></div>
+                    </div>
+
+                    <div class="wg-universe__panel">
+                      <p class="wg-universe__eyebrow">Lab experience · WG1</p>
+                      <p class="wg-universe__title">Sweep a confocal plane through a wall cross-section.</p>
+                      <p class="wg-universe__copy">
+                        Drag the slider to move an optical section through a stylised wall. Brighter bands hint at regions where probes
+                        bind more strongly, like tuning gain on a real microscope.
+                      </p>
+
+                      <label class="wg-universe__control">
+                        <span class="wg-universe__control-label">Optical section depth</span>
+                        <input
+                          type="range"
+                          min="0"
+                          max="100"
+                          value="55"
+                          class="wg-universe__slider"
+                          data-universe-control="wg1-intensity"
+                          aria-label="Adjust optical section depth in the virtual microscope"
+                        >
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- WG2 -->
+              <article class="wg-card" id="wg2">
+                <span class="wg-badge wg-badge--wg2">WG2</span>
+                <h3 class="wg-card__title">Advanced Computing Tools in Image and Data Analysis</h3>
+                <p class="wg-card__summary">
+                  Development and dissemination of advanced image and data analysis methodologies with a strong emphasis on deep learning approaches.
+                </p>
+
+                <button class="wg-card__toggle" type="button" aria-expanded="false" data-universe-toggle="wg2">
+                  <span class="wg-card__toggle-label">Open lab universe</span>
+                  <span class="wg-card__toggle-hint">Chemistry &amp; computing experiment</span>
+                </button>
+
+                <!-- WG2 Chemistry Universe (Arabidopsis zoom → chemistry canvas) -->
+                <div class="wg-universe wg-universe--chemistry" data-universe-id="wg2-chemistry" hidden>
+                  <div class="wg-universe__shell">
+                    <div class="wg-universe__visual">
+                      <div class="wg-chemistry-scope" aria-hidden="true">
+                        <div class="wg-chemistry__zoom-wrap" data-wg2-zoom-wrap>
+                          <div
+                            class="wg-chemistry__zoom-bg"
+                            data-wg2-zoom-bg
+                            style="background-image: url('/images/arabidopsis_root_stained_with_pectin_probe.webp');"
+                            aria-hidden="true"
+                          ></div>
+
+                          <div class="wg-chemistry__layer" data-chem-layer>
+                            <canvas class="wg-chemistry__canvas" data-chem-canvas aria-hidden="true"></canvas>
+                          </div>
+
+                          <div class="wg-chemistry__vignette" aria-hidden="true"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="wg-universe__panel">
+                      <p class="wg-universe__eyebrow">Lab experience · WG2</p>
+                      <p class="wg-universe__title">Zoom from a wall patch into a chemistry universe.</p>
+                      <p class="wg-universe__copy">
+                        Start at a blurred Arabidopsis wall. As you crank the zoom, the image fades into an abstract field of cellulose
+                        bundles and metabolites, echoing how advanced algorithms reinterpret fluorescence data.
+                      </p>
+
+                      <div class="wg-universe__control">
+                        <span class="wg-universe__control-label">Zoom into the wall (1× → 50×)</span>
+                        <div class="wg-universe__range-row">
+                          <input
+                            type="range"
+                            min="1"
+                            max="50"
+                            value="8"
+                            class="wg-universe__slider"
+                            data-chem-zoom
+                            aria-label="Zoom into the chemistry view from 1× to 50×"
+                          >
+                          <span class="wg-universe__range-value" data-chem-zoom-label>8×</span>
+                        </div>
+                      </div>
+
+                      <div class="wg-universe__control-group" aria-label="Emphasise chemistry layers">
+                        <label class="wg-universe__check">
+                          <input type="checkbox" data-chem-ch="bundles" checked>
+                          <span>Bundles</span>
+                        </label>
+                        <label class="wg-universe__check">
+                          <input type="checkbox" data-chem-ch="primary" checked>
+                          <span>Primary</span>
+                        </label>
+                        <label class="wg-universe__check">
+                          <input type="checkbox" data-chem-ch="secondary" checked>
+                          <span>Secondary</span>
+                        </label>
+                      </div>
+
+                      <p class="wg-universe__copy wg-universe__copy--secondary">
+                        Drag the zoom to control the transition yourself. Toggle the views to feel what denoising, segmentation and
+                        feature extraction do to the same underlying signal.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- WG3 -->
+              <article class="wg-card" id="wg3">
+                <span class="wg-badge wg-badge--wg3">WG3</span>
+                <h3 class="wg-card__title">Interdisciplinary Approach for Multiscale Modeling</h3>
+                <p class="wg-card__summary">
+                  Advancing multiscale, data-driven modelling through collaboration between biology, biochemistry, physics, mathematics, and computational sciences.
+                </p>
+
+                <button class="wg-card__toggle" type="button" aria-expanded="false" data-universe-toggle="wg3">
+                  <span class="wg-card__toggle-label">Open lab universe</span>
+                  <span class="wg-card__toggle-hint">Modelling experiment</span>
+                </button>
+
+                <!-- WG3 Modelling Universe -->
+                <div class="wg-universe wg-universe--modelling" data-universe-id="wg3-modelling" hidden>
+                  <div class="wg-universe__shell">
+                    <div class="wg-universe__visual">
+                      <div class="wg-universe__canvas" data-universe-canvas aria-hidden="true"></div>
+                    </div>
+
+                    <div class="wg-universe__panel">
+                      <p class="wg-universe__eyebrow">Lab experience · WG3</p>
+                      <p class="wg-universe__title">Push a virtual wall patch into the non-linear regime.</p>
+                      <p class="wg-universe__copy">
+                        Increase the applied stress and watch the contours and mesh distort. It’s a simplified echo of finite-element
+                        models used to bridge wall structure and mechanics.
+                      </p>
+
+                      <label class="wg-universe__control">
+                        <span class="wg-universe__control-label">Applied stress</span>
+                        <input
+                          type="range"
+                          min="0"
+                          max="100"
+                          value="35"
+                          class="wg-universe__slider"
+                          data-universe-control="wg3-stress"
+                          aria-label="Adjust applied stress in the modelling experiment"
+                        >
+                      </label>
+
+                      <p class="wg-universe__copy wg-universe__copy--secondary">
+                        Low values keep the field neat. As you approach the upper range, the simulated deformation field becomes
+                        more complex, hinting at buckling, strain localisation and other non-linear responses.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Leadership -->
+      <section id="leadership" class="section" data-bg="workingGroups">
+        <div class="section__inner">
+          <div class="content-surface content-surface--wide">
+            <h2>Leadership</h2>
+
+            <div class="leadership-subsection">
+              <h3>Core Team</h3>
+              <div class="leader-grid">
+                <div class="leader-card leader-card--leadership">
+                  <p class="leader-card__name">Kateřina Schwarzerová</p>
+                  <p class="leader-card__role">Chair</p>
+                  <p class="leader-card__country">Czech Republic</p>
+                </div>
+                <div class="leader-card leader-card--leadership">
+                  <p class="leader-card__name">Jozef Mravec</p>
+                  <p class="leader-card__role">Vice-Chair</p>
+                  <p class="leader-card__country">Slovakia</p>
+                </div>
+                <div class="leader-card leader-card--leadership">
+                  <p class="leader-card__name">Patricia Sampaio</p>
+                  <p class="leader-card__role">Grant Coordinator</p>
+                  <p class="leader-card__country">Portugal</p>
+                </div>
+                <div class="leader-card leader-card--leadership">
+                  <p class="leader-card__name">Laura Bacete</p>
+                  <p class="leader-card__role">Science Communication</p>
+                  <p class="leader-card__country">Sweden</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="leadership-subsection">
+              <h3>Working Group Leaders</h3>
+              <div class="leader-grid">
+                <div class="leader-card leader-card--wg1">
+                  <p class="leader-card__name">Aline Voxeur</p>
+                  <p class="leader-card__role">WG1 Leader</p>
+                  <p class="leader-card__country">France</p>
+                </div>
+                <div class="leader-card leader-card--wg2">
+                  <p class="leader-card__name">Stéphane Verger</p>
+                  <p class="leader-card__role">WG2 Leader</p>
+                  <p class="leader-card__country">Sweden</p>
+                </div>
+                <div class="leader-card leader-card--wg3">
+                  <p class="leader-card__name">Dorota Kwiatkowska</p>
+                  <p class="leader-card__role">WG3 Leader</p>
+                  <p class="leader-card__country">Poland</p>
+                </div>
+                <div class="leader-card leader-card--wg3">
+                  <p class="leader-card__name">Grégory Mouille</p>
+                  <p class="leader-card__role">WG3 Co-Leader</p>
+                  <p class="leader-card__country">France</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Participating Countries (Map) -->
+      <section id="participating" class="section" data-bg="about" data-lazy-map>
+        <div class="section__inner">
+          <div class="content-surface content-surface--wide">
+            <h2 id="participating-title">Participating Countries</h2>
+
+            <div class="map-section">
+              <div class="map-counters">
+                <div class="counter" data-target="26">
+                  <span class="counter__value">0</span>
+                  <span class="counter__label">Countries</span>
+                </div>
+                <div class="counter" data-target="108">
+                  <span class="counter__value">0</span>
+                  <span class="counter__label">Members</span>
+                </div>
+              </div>
+
+              <div class="view-toggle">
+                <button id="view-toggle-btn" class="view-toggle__btn" data-current-view="map" aria-pressed="false" aria-controls="map-view table-view">
+                  <span class="view-toggle__icon" aria-hidden="true">📋</span>
+                  <span class="view-toggle__text">Switch to table</span>
+                </button>
+              </div>
+
+              <div id="map-view" class="view-panel">
+                <div class="map-wrapper">
+                  <div class="map-controls">
+                    <button class="map-control" id="zoom-in" aria-label="Zoom in">+</button>
+                    <button class="map-control" id="zoom-out" aria-label="Zoom out">−</button>
+                    <button class="map-control map-control--reset" id="zoom-reset" aria-label="Reset zoom">Reset</button>
+                  </div>
+                  <div class="map-container map-container--loading" role="img" aria-label="Interactive map of participating countries"></div>
+                </div>
+
+                <div class="map-legend">
+                  <h4 class="map-legend__title">Legend</h4>
+                  <div class="map-legend__items">
+                    <div class="map-legend__item">
+                      <span class="legend-dot"></span>
+                      <span>Participating country</span>
+                    </div>
+                    <div class="map-legend__item">
+                      <span class="leadership-badge__dot"></span>
+                      <span>Leadership present</span>
+                    </div>
+                  </div>
+                  <p class="map-legend__note">Click markers to see details. Working group participation shown in callout.</p>
+                </div>
+              </div>
+
+              <div id="table-view" class="view-panel" hidden>
+                <h3 id="table-view-heading" tabindex="-1">Participating Countries</h3>
+                <div class="table-wrapper">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Country</th>
+                        <th scope="col">Members</th>
+                        <th scope="col">WG1</th>
+                        <th scope="col">WG2</th>
+                        <th scope="col">WG3</th>
+                        <th scope="col">Leadership</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>Czech Republic</td><td>22</td><td>18</td><td>14</td><td>12</td><td><span class="leader-dot" title="Chair: Kateřina Schwarzerová"></span></td></tr>
+                      <tr><td>France</td><td>14</td><td>12</td><td>8</td><td>10</td><td><span class="leader-dot" title="WG1 Leader, WG3 Co-Leader"></span></td></tr>
+                      <tr><td>Türkiye</td><td>14</td><td>10</td><td>8</td><td>6</td><td>—</td></tr>
+                      <tr><td>Poland</td><td>10</td><td>8</td><td>6</td><td>8</td><td><span class="leader-dot" title="WG3 Leader"></span></td></tr>
+                      <tr><td>Serbia</td><td>10</td><td>8</td><td>6</td><td>5</td><td>—</td></tr>
+                      <tr><td>Germany</td><td>5</td><td>4</td><td>3</td><td>2</td><td>—</td></tr>
+                      <tr><td>Spain</td><td>4</td><td>3</td><td>2</td><td>2</td><td>—</td></tr>
+                      <tr><td>Slovakia</td><td>3</td><td>2</td><td>2</td><td>1</td><td><span class="leader-dot" title="Vice-Chair"></span></td></tr>
+                      <tr><td>United Kingdom</td><td>3</td><td>2</td><td>2</td><td>1</td><td>—</td></tr>
+                      <tr><td>Sweden</td><td>2</td><td>1</td><td>2</td><td>1</td><td><span class="leader-dot" title="WG2 Leader, Science Communication"></span></td></tr>
+                      <tr><td>Portugal</td><td>2</td><td>1</td><td>1</td><td>1</td><td><span class="leader-dot" title="Grant Coordinator"></span></td></tr>
+                      <tr><td>Belgium</td><td>2</td><td>1</td><td>2</td><td>1</td><td>—</td></tr>
+                      <tr><td>Finland</td><td>2</td><td>1</td><td>1</td><td>1</td><td>—</td></tr>
+                      <tr><td>Ireland</td><td>2</td><td>2</td><td>1</td><td>0</td><td>—</td></tr>
+                      <tr><td>Albania</td><td>2</td><td>2</td><td>1</td><td>1</td><td>—</td></tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th scope="row">Total (26 countries)</th>
+                        <td>108</td>
+                        <td colspan="4"></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Grants -->
+      <section id="grants" class="section" data-bg="grants">
+        <div class="section__inner">
+          <div class="content-surface content-surface--wide">
+            <h2>Funding Opportunities</h2>
+            <div class="grant-cards">
+              <article class="grant-card">
+                <span class="status-badge status-badge--soon">Coming Soon</span>
+                <h3>Short-Term Scientific Missions (STSMs)</h3>
+                <p>Research exchange visits between COST members, typically 5-180 days. Support collaborative research at partner institutions.</p>
+              </article>
+
+              <article class="grant-card">
+                <span class="status-badge status-badge--soon">Coming Soon</span>
+                <h3>ITC Conference Grants</h3>
+                <p>Support for early-career researchers from Inclusiveness Target Countries to attend scientific conferences.</p>
+              </article>
+
+              <article class="grant-card">
+                <span class="status-badge status-badge--soon">Coming Soon</span>
+                <h3>Training Schools</h3>
+                <p>Intensive courses on plant cell wall analysis methods, computational tools, and modeling approaches.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- News -->
+<section id="news" class="section" data-bg="grants">
+  <div class="section__inner">
+    <div class="content-surface content-surface--wide">
+      <h2>News</h2>
+      <p>Updates, announcements, and upcoming activities will appear here.</p>
+      <p class="hero__kicker">Tip: you can later replace this with a list of posts or embedded updates.</p>
+    </div>
+  </div>
+</section>
+ 
+
+
+      <!-- Join -->
+      <section id="join" class="section" data-bg="hero">
+        <div class="section__inner">
+          <div class="content-surface">
+            <h2>Join PlantWallK</h2>
+            <p>We welcome researchers at all career stages who are interested in plant cell wall research, imaging, computational biology, or related fields.</p>
+
+            <ol class="steps-list">
+              <li>
+                <strong>Check Eligibility</strong>
+                <p>Researchers from COST member countries can join. Check if your country participates.</p>
+              </li>
+              <li>
+                <strong>Create an e-COST Account</strong>
+                <p>Register at <a href="https://e-services.cost.eu" target="_blank" rel="noopener noreferrer">e-services.cost.eu</a> with your institutional email.</p>
+              </li>
+              <li>
+                <strong>Apply to Join</strong>
+                <p>Search for CA24116 (PlantWallK) and submit your application to join.</p>
+              </li>
+            </ol>
+
+            <div class="hero__cta">
+              <a href="https://www.cost.eu/actions/CA24116/" class="btn btn--primary" target="_blank" rel="noopener noreferrer">
+                Apply via COST ↗
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+<!-- Credits -->
+<section id="credits" class="section" data-bg="about">
+  <div class="section__inner">
+    <div class="content-surface">
+      <h2>Credits</h2>
+      <p>Site design and development credits, image sources, and acknowledgements will appear here.</p>
+    </div>
+  </div>
+</section>
+
+    </main>
+  </div>
+
+
+
+  <!-- Accessibility Panel -->
+  <div id="a11y-overlay" class="a11y-overlay" aria-hidden="true"></div>
+  <aside id="a11y-panel" class="a11y-panel" aria-hidden="true" aria-labelledby="a11y-panel-title">
+    <div class="a11y-panel__header">
+      <h2 id="a11y-panel-title" class="a11y-panel__title">Accessibility</h2>
+      <button id="a11y-close" class="a11y-panel__close" aria-label="Close accessibility panel">×</button>
+    </div>
+    <div class="a11y-panel__content">
+      <div class="a11y-option">
+        <div>
+          <p class="a11y-option__label">Dyslexia-friendly mode</p>
+          <p class="a11y-option__desc">Increased spacing, heavier font</p>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="toggle-dyslexia">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+
+      <div class="a11y-option">
+        <div>
+          <p class="a11y-option__label">High contrast</p>
+          <p class="a11y-option__desc">Enhanced text visibility</p>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="toggle-contrast">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+
+      <div class="a11y-option">
+        <div>
+          <p class="a11y-option__label">Reduce motion</p>
+          <p class="a11y-option__desc">Disable animations</p>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="toggle-motion">
+          <span class="toggle-switch__slider"></span>
+        </label>
+      </div>
+    </div>
+  </aside>
+
+  <footer class="site-footer" role="contentinfo">
+  <div class="site-footer__inner">
+    <div class="site-footer__right">
+      <div class="site-footer__row">
+        <div class="site-footer__logos" aria-label="Funding logos">
+          <img
+            src="/images/cost-logo.jpg"
+            alt="COST (European Cooperation in Science and Technology)"
+            class="site-footer__logo site-footer__logo--cost"
+          >
+          <img
+            src="/images/eu-flag.svg"
+            alt="European Union"
+            class="site-footer__logo site-footer__logo--eu"
+          >
+        </div>
+
+
+      </div>
+
+      <p class="site-footer__funding">PlantWallK is funded by COST (European Cooperation in Science and Technology)</p>
+      <p class="site-footer__copyright">© 2024–2028 PlantWallK COST Action CA24116</p>
+    </div>
+  </div>
+</footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

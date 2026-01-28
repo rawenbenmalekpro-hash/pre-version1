@@ -1,0 +1,368 @@
+/* ========================================
+   PlantWallK Theme System
+   Phase 15 - Premium frosted glass + holographic
+   ======================================== */
+
+:root {
+  /* ======== Logo Color (Editable) ======== */
+  --logo-color: #5f8dd3;
+  
+  /* ======== Color Palette ======== */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  
+  /* Blues */
+  --color-blue-50: #eff6ff;
+  --color-blue-100: #dbeafe;
+  --color-blue-200: #bfdbfe;
+  --color-blue-300: #93c5fd;
+  --color-blue-400: #60a5fa;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+  
+  /* Grays */
+  --color-gray-50: #f8fafc;
+  --color-gray-100: #f1f5f9;
+  --color-gray-200: #e2e8f0;
+  --color-gray-300: #cbd5e1;
+  --color-gray-400: #94a3b8;
+  --color-gray-500: #64748b;
+  --color-gray-600: #475569;
+  --color-gray-700: #334155;
+  --color-gray-800: #1e293b;
+  --color-gray-900: #0f172a;
+  --color-gray-950: #020617;
+  
+  /* Status */
+  --color-success: #22c55e;
+  --color-warning: #eab308;
+  --color-error: #ef4444;
+  
+  /* WG Colors - Calm Lab Palette */
+  --color-wg1: #38bdf8;
+  --color-wg1-bg: rgba(56, 189, 248, 0.12);
+  --color-wg2: #a78bfa;
+  --color-wg2-bg: rgba(167, 139, 250, 0.12);
+  --color-wg3: #34d399;
+  --color-wg3-bg: rgba(52, 211, 153, 0.12);
+  --color-leadership: #60a5fa;
+  
+  /* ======== Typography ======== */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  
+  /* ======== Spacing ======== */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  
+  /* ======== Effects ======== */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+  
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
+  
+  /* Transitions - soft and premium */
+  --transition-fast: 150ms ease-out;
+  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-theme: 400ms ease;
+  --transition-bg: 1400ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  
+  /* ======== Layout ======== */
+  --sidebar-width: 260px;
+  --content-max: 1000px;
+  --header-height: 60px;
+  
+  /* Z-Index */
+  --z-base: 0;
+  --z-elevated: 10;
+  --z-sticky: 100;
+  --z-overlay: 200;
+  --z-modal: 300;
+  --z-tooltip: 400;
+  
+  /* ======== Background Images ======== */
+  --bg-hero-image: url('/images/bg-hero.webp');
+  --bg-about-image: url('/images/bg-about.webp');
+  --bg-wg-image: url('/images/bg-wg.webp');
+  --bg-grants-image: url('/images/bg-grants.webp');
+}
+
+/* ======== DARK THEME (Default) ======== */
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+  
+  --bg-page: var(--color-gray-950);
+  --bg-surface: var(--color-gray-900);
+  --bg-surface-elevated: var(--color-gray-800);
+  --bg-glass: rgba(255, 255, 255, 0.03);
+  --bg-glass-hover: rgba(255, 255, 255, 0.08);
+  --bg-glass-active: rgba(255, 255, 255, 0.12);
+  
+  --glass-bg: rgba(15, 23, 42, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-blur: 12px;
+  
+  --text-primary: var(--color-gray-50);
+  --text-secondary: var(--color-gray-300);
+  --text-muted: var(--color-gray-500);
+  
+  --border-default: var(--color-gray-700);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  
+  --color-link: var(--color-blue-300);
+  --color-link-hover: var(--color-blue-200);
+  --color-focus: var(--color-blue-400);
+  --color-accent: var(--color-blue-500);
+  
+  --scrim-dark: linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.5) 100%);
+  --scrim-section: var(--scrim-dark);
+  --bg-filter: none;
+
+  /* Title shadow (dark only) */
+  --hero-title-shadow: 0 0 28px rgba(2, 6, 23, 0.86);
+
+  /* Reading surfaces - Premium frosted glass */
+  --content-surface-bg: rgba(15, 23, 42, 0.86);
+  --content-surface-border: rgba(148, 163, 184, 0.28);
+  --content-surface-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+  --content-surface-blur: 18px;
+  --content-surface-sheen: radial-gradient(ellipse at 20% 10%, rgba(96, 165, 250, 0.10) 0%, rgba(0,0,0,0) 60%);
+  --content-surface-sheen-opacity: 0.65;
+  --content-surface-sheen-blend: screen;
+
+  /* Card sheen */
+  --card-sheen: radial-gradient(ellipse at 20% 0%, rgba(96, 165, 250, 0.07) 0%, rgba(0,0,0,0) 60%);
+  --card-sheen-opacity: 0.22;
+
+  /* Section scrim behind content */
+  --section-scrim:
+    radial-gradient(120% 90% at 70% 0%, rgba(59, 130, 246, 0.10) 0%, rgba(59, 130, 246, 0.00) 60%),
+radial-gradient(120% 90% at 25% 20%, rgba(167, 139, 250, 0.08) 0%, rgba(167, 139, 250, 0.00) 65%),
+linear-gradient(180deg, rgba(11,14,20,0.66) 0%, rgba(11,14,20,0.36) 55%, rgba(11,14,20,0.00) 100%);
+
+  /* Continuous background canvas overlays (microscopy-friendly) */
+  --bg-overlay:
+    radial-gradient(ellipse at 35% 15%, rgba(59, 130, 246, 0.14) 0%, rgba(59, 130, 246, 0.00) 58%),
+radial-gradient(ellipse at 75% 10%, rgba(167, 139, 250, 0.12) 0%, rgba(167, 139, 250, 0.00) 55%),
+linear-gradient(180deg, rgba(11,14,20,0.62) 0%, rgba(11,14,20,0.40) 55%, rgba(11,14,20,0.00) 100%);
+  --bg-noise-opacity: var(--bg-noise-opacity-token-dark, 0.05);
+  
+  /* Calm nav affordances */
+  --nav-hover-bg: rgba(255, 255, 255, 0.06);
+  --nav-hover-border: rgba(255, 255, 255, 0.10);
+  --nav-active-bg: rgba(96, 165, 250, 0.10);
+  --nav-active-border: rgba(96, 165, 250, 0.20);
+  --scrim-radial: radial-gradient(ellipse at center, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.8) 100%);
+  
+  --glow-soft: 0 0 20px rgba(59, 130, 246, 0.2);
+  --glow-medium: 0 0 30px rgba(59, 130, 246, 0.3);
+  
+  --map-water: #070d1a;
+  --map-land: #1e293b;
+  --map-participating: #3b82f6;
+  --map-hover: #60a5fa;
+  --map-stroke: #0f172a;
+  
+  --marker-glow: rgba(59, 130, 246, 0.6);
+  --marker-core: #60a5fa;
+  --marker-pulse: rgba(59, 130, 246, 0.4);
+}
+
+/* ======== LIGHT THEME - Premium Holographic Lab Glass ======== */
+[data-theme="light"] {
+  color-scheme: light;
+  
+  --bg-page: #f4f7ff;
+  --bg-surface: rgba(255, 255, 255, 0.82);
+  --bg-surface-elevated: rgba(255, 255, 255, 0.92);
+  --bg-glass: rgba(255, 255, 255, 0.62);
+  --bg-glass-hover: rgba(255, 255, 255, 0.78);
+  --bg-glass-active: rgba(255, 255, 255, 0.88);
+  
+  --glass-bg: rgba(255, 255, 255, 0.70);
+  --glass-border: rgba(15, 23, 42, 0.10);
+  
+  --text-primary: #0b1220;
+  --text-secondary: rgba(11, 18, 32, 0.72);
+  --text-muted: rgba(11, 18, 32, 0.52);
+  
+  --border-default: rgba(15, 23, 42, 0.18);
+  --border-subtle: rgba(15, 23, 42, 0.10);
+  
+  --color-link: var(--color-blue-600);
+  --color-link-hover: var(--color-blue-700);
+  --color-focus: var(--color-blue-500);
+  
+  --scrim-dark: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 100%);
+  --scrim-section: linear-gradient(to bottom, rgba(244,247,255,0.92) 0%, rgba(244,247,255,0.72) 100%);
+  --bg-filter: brightness(1.18) saturate(0.92) contrast(0.92);
+
+  /* Title shadow (none in light) */
+  --hero-title-shadow: none;
+
+  /* Reading surfaces - Premium holographic glass */
+  --content-surface-bg: rgba(255, 255, 255, 0.72);
+  --content-surface-border: rgba(15, 23, 42, 0.14);
+  --content-surface-shadow: 0 18px 60px rgba(15, 23, 42, 0.10);
+  --content-surface-blur: 22px;
+  --content-surface-sheen:
+    radial-gradient(ellipse at 85% 0%, rgba(56, 189, 248, 0.20) 0%, rgba(56, 189, 248, 0.00) 55%),
+radial-gradient(ellipse at 15% 15%, rgba(167, 139, 250, 0.18) 0%, rgba(167, 139, 250, 0.00) 60%),
+conic-gradient(from 215deg at 70% 20%,
+  rgba(56,189,248,0.18),
+  rgba(167,139,250,0.14),
+  rgba(251,191,36,0.08),
+  rgba(34,211,238,0.14),
+  rgba(56,189,248,0.18)
+),
+linear-gradient(135deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.18) 42%, rgba(255, 255, 255, 0.40) 100%);
+  --content-surface-sheen-opacity: 0.95;
+  --content-surface-sheen-blend: soft-light;
+
+  /* Card sheen - holographic */
+  --card-sheen: linear-gradient(135deg, rgba(56, 189, 248, 0.18) 0%, rgba(167, 139, 250, 0.14) 40%, rgba(255,255,255,0.34) 100%);
+  --card-sheen-opacity: 0.75;
+
+  /* Section scrim behind content */
+  --section-scrim:
+    radial-gradient(120% 90% at 85% 5%, rgba(56,189,248,0.10) 0%, rgba(56,189,248,0.00) 60%),
+radial-gradient(110% 90% at 20% 25%, rgba(167,139,250,0.09) 0%, rgba(167,139,250,0.00) 65%),
+linear-gradient(135deg, rgba(244,247,255,0.78) 0%, rgba(244,247,255,0.38) 55%, rgba(244,247,255,0.00) 100%);
+
+  /* Holographic / frosted overlay under content */
+  --bg-overlay:
+    radial-gradient(120% 90% at 75% 10%, rgba(56, 189, 248, 0.18) 0%, rgba(56, 189, 248, 0.00) 58%),
+radial-gradient(120% 90% at 20% 25%, rgba(167, 139, 250, 0.16) 0%, rgba(167, 139, 250, 0.00) 62%),
+conic-gradient(from 220deg at 30% 20%,
+  rgba(56,189,248,0.16),
+  rgba(167,139,250,0.12),
+  rgba(251,191,36,0.06),
+  rgba(34,211,238,0.12),
+  rgba(56,189,248,0.16)
+),
+linear-gradient(135deg, rgba(255, 255, 255, 0.68) 0%, rgba(255, 255, 255, 0.30) 55%, rgba(255, 255, 255, 0.58) 100%);
+  --bg-noise-opacity: var(--bg-noise-opacity-token-light, 0.02);
+  
+  /* Calm nav affordances */
+  --nav-hover-bg: rgba(255, 255, 255, 0.55);
+  --nav-hover-border: rgba(56, 189, 248, 0.20);
+  --nav-active-bg: rgba(56, 189, 248, 0.12);
+  --nav-active-border: rgba(167, 139, 250, 0.22);
+  --scrim-radial: radial-gradient(ellipse at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%);
+  
+  --glow-soft: 0 0 20px rgba(59, 130, 246, 0.15);
+  --glow-medium: 0 0 30px rgba(59, 130, 246, 0.25);
+  
+  --map-water: #e0f2fe;
+  --map-land: #f1f5f9;
+  --map-participating: #1d4ed8;
+  --map-hover: #1e40af;
+  --map-stroke: #cbd5e1;
+  
+  --marker-glow: rgba(29, 78, 216, 0.45);
+  --marker-core: #1d4ed8;
+  --marker-pulse: rgba(29, 78, 216, 0.26);
+}
+
+/* ======== Theme Transition ======== */
+html {
+  transition: background-color var(--transition-theme),
+              color var(--transition-theme);
+}
+
+html.theme-transitioning,
+html.theme-transitioning * {
+  transition: background-color var(--transition-theme),
+              color var(--transition-theme),
+              border-color var(--transition-theme),
+              box-shadow var(--transition-theme) !important;
+}
+
+/* ======== Accessibility: Dyslexia Mode ======== */
+.dyslexia-mode {
+  --leading-normal: 1.8;
+  --leading-relaxed: 2;
+}
+
+.dyslexia-mode body {
+  letter-spacing: 0.05em;
+  word-spacing: 0.12em;
+  font-weight: 450;
+}
+
+.dyslexia-mode p,
+.dyslexia-mode li,
+.dyslexia-mode td,
+.dyslexia-mode th {
+  text-align: left !important;
+  hyphens: none !important;
+}
+
+/* ======== Accessibility: High Contrast ======== */
+.high-contrast {
+  --text-primary: #ffffff;
+  --text-secondary: #e2e8f0;
+  --bg-page: #000000;
+  --bg-surface: #0a0a0a;
+  --border-default: #ffffff;
+  --color-link: #60a5fa;
+}
+
+.high-contrast[data-theme="light"] {
+  --text-primary: #000000;
+  --text-secondary: #1e293b;
+  --bg-page: #ffffff;
+  --bg-surface: #f8fafc;
+  --border-default: #000000;
+}
+
+/* ======== Reduced Motion ======== */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0ms;
+    --transition-base: 0ms;
+    --transition-slow: 0ms;
+    --transition-theme: 0ms;
+  }
+}
+
+.reduce-motion,
+.reduce-motion * {
+  --transition-fast: 0ms !important;
+  --transition-base: 0ms !important;
+  --transition-slow: 0ms !important;
+  --transition-theme: 0ms !important;
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}

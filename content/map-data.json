@@ -1,0 +1,289 @@
+{
+  "schema_version": "2.0",
+  "totals": {
+    "countries": 26,
+    "members": 108
+  },
+  "countries": [
+    {
+      "code": "CZ",
+      "name": "Czech Republic",
+      "members": 22,
+      "wg1": 18,
+      "wg2": 14,
+      "wg3": 12,
+      "hasLeadership": true,
+      "leadership": [
+        { "name": "Kateřina Schwarzerová", "role": "Chair" }
+      ],
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "FR",
+      "name": "France",
+      "members": 14,
+      "wg1": 12,
+      "wg2": 8,
+      "wg3": 10,
+      "hasLeadership": true,
+      "leadership": [
+        { "name": "Aline Voxeur", "role": "WG1 Leader" },
+        { "name": "Grégory Mouille", "role": "WG3 Co-Leader" }
+      ],
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "TR",
+      "name": "Türkiye",
+      "members": 14,
+      "wg1": 10,
+      "wg2": 8,
+      "wg3": 6,
+      "hasLeadership": false,
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "PL",
+      "name": "Poland",
+      "members": 10,
+      "wg1": 8,
+      "wg2": 6,
+      "wg3": 8,
+      "hasLeadership": true,
+      "leadership": [
+        { "name": "Dorota Kwiatkowska", "role": "WG3 Leader" }
+      ],
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "RS",
+      "name": "Serbia",
+      "members": 10,
+      "wg1": 8,
+      "wg2": 6,
+      "wg3": 5,
+      "hasLeadership": false,
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "DE",
+      "name": "Germany",
+      "members": 5,
+      "wg1": 4,
+      "wg2": 3,
+      "wg3": 2,
+      "hasLeadership": false,
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "ES",
+      "name": "Spain",
+      "members": 4,
+      "wg1": 3,
+      "wg2": 2,
+      "wg3": 2,
+      "hasLeadership": false,
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "SK",
+      "name": "Slovakia",
+      "members": 3,
+      "wg1": 2,
+      "wg2": 2,
+      "wg3": 1,
+      "hasLeadership": true,
+      "leadership": [
+        { "name": "Jozef Mravec", "role": "Vice-Chair" }
+      ],
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "GB",
+      "name": "United Kingdom",
+      "members": 3,
+      "wg1": 2,
+      "wg2": 2,
+      "wg3": 1,
+      "hasLeadership": false,
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "AL",
+      "name": "Albania",
+      "members": 2,
+      "wg1": 2,
+      "wg2": 1,
+      "wg3": 1,
+      "hasLeadership": false,
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "BE",
+      "name": "Belgium",
+      "members": 2,
+      "wg1": 1,
+      "wg2": 2,
+      "wg3": 1,
+      "hasLeadership": false,
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "FI",
+      "name": "Finland",
+      "members": 2,
+      "wg1": 1,
+      "wg2": 1,
+      "wg3": 1,
+      "hasLeadership": false,
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "IE",
+      "name": "Ireland",
+      "members": 2,
+      "wg1": 2,
+      "wg2": 1,
+      "wg3": 0,
+      "hasLeadership": false,
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "PT",
+      "name": "Portugal",
+      "members": 2,
+      "wg1": 1,
+      "wg2": 1,
+      "wg3": 1,
+      "hasLeadership": true,
+      "leadership": [
+        { "name": "Patricia Sampaio", "role": "Grant Coordinator" }
+      ],
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "SE",
+      "name": "Sweden",
+      "members": 2,
+      "wg1": 1,
+      "wg2": 2,
+      "wg3": 1,
+      "hasLeadership": true,
+      "leadership": [
+        { "name": "Laura Bacete", "role": "Science Communication" },
+        { "name": "Stéphane Verger", "role": "WG2 Leader" }
+      ],
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "BA",
+      "name": "Bosnia and Herzegovina",
+      "members": 1,
+      "wg1": 1,
+      "wg2": 0,
+      "wg3": 0,
+      "hasLeadership": false,
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "CY",
+      "name": "Cyprus",
+      "members": 1,
+      "wg1": 1,
+      "wg2": 1,
+      "wg3": 0,
+      "hasLeadership": false,
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "DK",
+      "name": "Denmark",
+      "members": 1,
+      "wg1": 1,
+      "wg2": 0,
+      "wg3": 1,
+      "hasLeadership": false,
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "EG",
+      "name": "Egypt",
+      "members": 1,
+      "wg1": 1,
+      "wg2": 0,
+      "wg3": 0,
+      "hasLeadership": false,
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "GR",
+      "name": "Greece",
+      "members": 1,
+      "wg1": 1,
+      "wg2": 0,
+      "wg3": 1,
+      "hasLeadership": false,
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "IL",
+      "name": "Israel",
+      "members": 1,
+      "wg1": 0,
+      "wg2": 1,
+      "wg3": 0,
+      "hasLeadership": false,
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "IT",
+      "name": "Italy",
+      "members": 1,
+      "wg1": 1,
+      "wg2": 0,
+      "wg3": 1,
+      "hasLeadership": false,
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "XK",
+      "name": "Kosovo",
+      "members": 1,
+      "wg1": 1,
+      "wg2": 0,
+      "wg3": 0,
+      "hasLeadership": false,
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "LT",
+      "name": "Lithuania",
+      "members": 1,
+      "wg1": 0,
+      "wg2": 1,
+      "wg3": 1,
+      "hasLeadership": false,
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "PS",
+      "name": "Palestine",
+      "members": 1,
+      "wg1": 1,
+      "wg2": 0,
+      "wg3": 0,
+      "hasLeadership": false,
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    },
+    {
+      "code": "UA",
+      "name": "Ukraine",
+      "members": 1,
+      "wg1": 1,
+      "wg2": 0,
+      "wg3": 0,
+      "hasLeadership": false,
+      "wgPeople": { "wg1": [], "wg2": [], "wg3": [] }
+    }
+  ]
+}

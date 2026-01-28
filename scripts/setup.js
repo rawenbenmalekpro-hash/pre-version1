@@ -20,7 +20,7 @@ if (!fs.existsSync(path.join(ROOT, 'node_modules'))) {
   process.exit(1);
 }
 
-['js/vendor', 'data'].forEach(dir => {
+['../js/vendor', 'data'].forEach(dir => {
   const fullPath = path.join(ROOT, dir);
   if (!fs.existsSync(fullPath)) fs.mkdirSync(fullPath, { recursive: true });
 });

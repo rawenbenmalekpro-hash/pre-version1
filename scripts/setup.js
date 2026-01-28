@@ -5,12 +5,12 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 
 const FILES = [
-  { src: 'node_modules/d3/dist/d3.min.js', dest: 'js/vendor/d3.v7.min.js' },
-  { src: 'node_modules/topojson-client/dist/topojson-client.min.js', dest: 'js/vendor/topojson-client.min.js' },
-  { src: 'node_modules/world-atlas/countries-110m.json', dest: 'data/world.topojson' },
+  { src: '../node_modules/d3/dist/d3.min.js', dest: 'js/vendor/d3.v7.min.js' },
+  { src: '../node_modules/topojson-client/dist/topojson-client.min.js', dest: 'js/vendor/topojson-client.min.js' },
+  { src: '../node_modules/world-atlas/countries-110m.json', dest: 'data/world.topojson' },
 
   // Universes (V1 parity)
-  { src: 'node_modules/three/build/three.module.js', dest: 'js/vendor/three.module.js' }
+  { src: '../node_modules/three/build/three.module.js', dest: 'js/vendor/three.module.js' }
 ];
 
 console.log('🌿 PlantWallK Setup\n');

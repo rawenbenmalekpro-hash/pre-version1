@@ -6,43 +6,28 @@
     "accentColor": "#3b82f6"
   },
   "backgrounds": {
-    "_comment": "Theme-aware background map. Section-id keys are primary contract. Legacy keys are kept for back-compat (hero/about/workingGroups/grants).",
+    "_comment": "Theme-aware background map. Keys must match data-bg values in HTML: hero, about, wg, grants",
     "dark": {
       "_comment": "Dark theme backgrounds (milestone 4 assets).",
-      "intro": "./images/pea_root_cap.webp",
-      "about": "./images/micrasterias_cos_488_1_day_post_label.webp",
-      "working-groups": "./images/cover_art_pea_root_apex.webp",
-      "leadership": "./images/arabidopsis_root_stained_with_pectin_probe.webp",
-      "participating": "./images/pea_root_cap.webp",
-      "grants": "./images/micrasterias_cos_488_1_day_post_label.webp",
-      "join": "./images/cover_art_pea_root_apex.webp",
-
-      "hero": "./images/pea_root_cap.webp",
-      "about-section": "./images/micrasterias_cos_488_1_day_post_label.webp",
-      "grants-section": "./images/arabidopsis_root_stained_with_pectin_probe.webp",
-      "workingGroups": "./images/cover_art_pea_root_apex.webp"
+      "hero": "../images/pea_root_cap.webp",
+      "about": "../images/micrasterias_cos_488_1_day_post_label.webp",
+      "wg": "../images/cover_art_pea_root_apex.webp",
+      "grants": "../images/arabidopsis_root_stained_with_pectin_probe.webp"
     },
     "light": {
       "_comment": "Light theme backgrounds (milestone 4 assets).",
-      "intro": "./images/linum_stem_20x.webp",
-      "about": "./images/sambucus_nigra_elderbery.webp",
-      "working-groups": "./images/toluidine_blue_cassava.webp",
-      "leadership": "./images/linum_stem_20x.webp",
-      "participating": "./images/sambucus_nigra_elderbery.webp",
-      "grants": "./images/toluidine_blue_cassava.webp",
-      "join": "./images/linum_stem_20x.webp",
-
-      "hero": "./images/linum_stem_20x.webp",
-      "about-section": "./images/sambucus_nigra_elderbery.webp",
-      "grants-section": "./images/toluidine_blue_cassava.webp",
-      "workingGroups": "./images/toluidine_blue_cassava.webp"
+      "hero": "../images/linum_stem_20x.webp",
+      "about": "../images/sambucus_nigra_elderbery.webp",
+      "wg": "../images/toluidine_blue_cassava.webp",
+      "grants": "../images/toluidine_blue_cassava.webp"
     },
     "_legacyFlat": {
-      "_comment": "Back-compat for older code paths that expect backgrounds[key] (milestone 4: point to safe defaults). Prefer backgrounds.dark/light.",
-      "hero": "./images/pea_root_cap.webp",
-      "about": "./images/micrasterias_cos_488_1_day_post_label.webp",
-      "workingGroups": "./images/cover_art_pea_root_apex.webp",
-      "grants": "./images/arabidopsis_root_stained_with_pectin_probe.webp"
+      "_comment": "Back-compat for older code paths.",
+      "hero": "../images/pea_root_cap.webp",
+      "about": "../images/micrasterias_cos_488_1_day_post_label.webp",
+      "wg": "../images/cover_art_pea_root_apex.webp",
+      "workingGroups": "../images/cover_art_pea_root_apex.webp",
+      "grants": "../images/arabidopsis_root_stained_with_pectin_probe.webp"
     }
   },
   "meta": {
@@ -50,17 +35,18 @@
     "siteDescription": "Multidisciplinary consortium to accelerate plant cell wall knowledge"
   },
   "backgroundCanvas": {
-    "_comment": "Maps section IDs to a background key from backgrounds.*. If missing, fallback is section[data-bg] then 'hero'.",
+    "_comment": "Maps section IDs to a background key from backgrounds.*. Keys must exist in backgrounds.dark/light",
     "sections": {
       "home": "hero",
       "learn-more": "about",
-      "working-groups": "working-groups",
-      "leadership": "leadership",
-      "participating": "participating",
-      "grants": "grants",
-      "join": "join",
+      "working-groups": "wg",
+      "leadership": "wg",
+      "participating": "about",
+      "grants-calls": "grants",
+      "activities": "grants",
+      "news": "grants",
+      "join": "hero",
       "credits": "about"
-      
     }
   },
   "themeOverlays": {

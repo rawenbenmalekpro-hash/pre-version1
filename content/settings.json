@@ -6,7 +6,7 @@
     "accentColor": "#3b82f6"
   },
   "backgrounds": {
-    "_comment": "Theme-aware background map. Keys must match data-bg values in HTML: hero, about, wg, grants",
+    "_comment": "Theme-aware background map. Keys MUST match data-bg values in HTML: hero, about, wg, grants",
     "dark": {
       "_comment": "Dark theme backgrounds (milestone 4 assets).",
       "hero": "../images/pea_root_cap.webp",
@@ -35,7 +35,7 @@
     "siteDescription": "Multidisciplinary consortium to accelerate plant cell wall knowledge"
   },
   "backgroundCanvas": {
-    "_comment": "Maps section IDs to a background key from backgrounds.*. Keys must exist in backgrounds.dark/light",
+    "_comment": "Maps section IDs to background keys. Keys must exist in backgrounds.dark/light",
     "sections": {
       "home": "hero",
       "learn-more": "about",

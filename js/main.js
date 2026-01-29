@@ -67,9 +67,9 @@
   const CONFIG = {
     lazyLoad: { rootMargin: '200px 0px', threshold: 0 },
     paths: {
-      d3: '/js/vendor/d3.v7.min.js',
-      topojson: '/js/vendor/topojson-client.min.js',
-      map: '/js/map.js'
+      d3: './js/vendor/d3.v7.min.js',
+      topojson: './js/vendor/topojson-client.min.js',
+      map: './js/map.js'
     },
     selectors: {
       mapTrigger: '[data-lazy-map]',
@@ -813,7 +813,7 @@
   async function loadSettings() {
     if (state.settings) return state.settings;
     try {
-      const res = await fetch(new URL('content/settings.json', document.baseURI), { cache: 'no-store' });
+      const res = await fetch('./content/settings.json', { cache: 'no-store' });
       if (!res.ok) throw new Error('settings fetch failed');
       const json = await res.json();
       state.settings = json;
@@ -1005,7 +1005,7 @@
     let universesModulePromise = null;
     const getUniversesModule = () => {
       if (!universesModulePromise) {
-        universesModulePromise = import('/js/universes-v1.js');
+        universesModulePromise = import('./js/universes-v1.js');
       }
       return universesModulePromise;
     };
@@ -1067,7 +1067,7 @@
         runtime = mod.createUniverseCanvasV1({
           universe: 'microscopy',
           container,
-          imagePath: '/images/asplenium_daucifolium_root_10x_upraveno.webp',
+          imagePath: './images/asplenium_daucifolium_root_10x_upraveno.webp',
           scan,
           morph: 0,
           channels: [1, 1, 1]
@@ -1104,8 +1104,8 @@
           canvas,
           zoom: getZoom(),
           channels: getChannels(),
-          rootImageSrc: '/images/arabidopsis_root_stained_with_pectin_probe.webp',
-          zoomImageSrc: '/images/atroot_zoom.png'
+          rootImageSrc: './images/arabidopsis_root_stained_with_pectin_probe.webp',
+          zoomImageSrc: './images/atroot_zoom.png'
         });
 
         const onZoom = () => {
@@ -1139,7 +1139,7 @@
         runtime = mod.createUniverseCanvasV1({
           universe: 'modelling',
           container,
-          imagePath: '/images/micrasterias_cos_488_1_day_post_label.webp',
+          imagePath: './images/micrasterias_cos_488_1_day_post_label.webp',
           scan: 0.2,
           morph,
           channels: [1, 1, 1]

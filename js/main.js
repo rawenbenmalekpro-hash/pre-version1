@@ -813,7 +813,7 @@
   async function loadSettings() {
     if (state.settings) return state.settings;
     try {
-      const res = await fetch(new URL('../content/settings.json', document.baseURI), { cache: 'no-store' });
+      const res = await fetch(new URL('content/settings.json', document.baseURI), { cache: 'no-store' });
       if (!res.ok) throw new Error('settings fetch failed');
       const json = await res.json();
       state.settings = json;

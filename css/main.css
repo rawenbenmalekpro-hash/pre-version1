@@ -1018,11 +1018,20 @@ a:hover { color: var(--color-link-hover); }
 
 /* ======== Footer ======== */
 .site-footer {
+  position: relative; /* Ensure it accepts z-index */
+  z-index: 1;         /* Lift it above the background canvas */
   padding: var(--space-12) var(--space-6);
   background: var(--bg-surface);
   border-top: 1px solid var(--border-subtle);
   text-align: center;
   transition: background-color var(--transition-theme);
+}
+
+/* Fix desktop layout so footer respects sidebar width */
+@media (min-width: 1025px) {
+  .site-footer {
+    margin-left: var(--sidebar-width);
+  }
 }
 
 .site-footer p { font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: var(--space-2); }

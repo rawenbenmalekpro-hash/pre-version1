@@ -1005,7 +1005,7 @@
     let universesModulePromise = null;
     const getUniversesModule = () => {
       if (!universesModulePromise) {
-        universesModulePromise = import('./js/universes-v1.js');
+        universesModulePromise = import('./universes-v1.js');
       }
       return universesModulePromise;
     };

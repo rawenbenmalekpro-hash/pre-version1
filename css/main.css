@@ -1036,7 +1036,18 @@ a:hover { color: var(--color-link-hover); }
 
 .site-footer p { font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: var(--space-2); }
 .site-footer__copyright { font-size: var(--text-xs); color: var(--text-muted); }
+.site-footer__logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-6); /* Space between the two logos */
+  margin-bottom: var(--space-4); /* Space between logos and the text below */
+}
 
+.site-footer__logo {
+  height: 60px; /* Restricts the height to 60px as requested */
+  width: auto;  /* Maintains the correct aspect ratio */
+}
 /* ======== Accessibility Panel ======== */
 .a11y-panel {
   position: fixed;

@@ -21,7 +21,121 @@ void main(){
   gl_Position = vec4(aPos, 0.0, 1.0);
 }`.trim();
 
-const FRAG = `precision highp float;varying vec2 vUv;uniform sampler2D uTex;uniform vec2 uResolution;uniform float uTime;uniform float uUniverse;uniform float uScan;uniform vec3 uChannels;uniform float uMorph;float saturate(float x){return clamp(x,0.0,1.0);}float grid(vec2 uv,float scale,float thickness){vec2 g=abs(fract(uv*scale)-0.5);float line=min(g.x,g.y);return 1.0-smoothstep(thickness,thickness+0.0025,line);}float hash(vec2 p){p=vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3)));return fract(sin(p.x+p.y)*43758.5453123);}void main(){vec2 uv=vUv;vec2 c=uv-0.5;float r=length(c);float wobbleBase=(uUniverse<0.5)?0.0:(uUniverse<1.5)?0.008:0.004;float wobble=wobbleBase==0.0?0.0:wobbleBase+sin(uTime*0.7)*wobbleBase*0.5;vec2 warp=vec2(sin(c.y*8.0+uTime*0.8),cos(c.x*7.0-uTime*0.6))*wobble;vec2 uvWarped=uv+warp;vec3 base=texture2D(uTex,clamp(uvWarped,0.0,1.0)).rgb;vec3 col;if(uUniverse<0.5){float scanPos=uScan;float dist=abs(uv.y-scanPos);vec3 blurred=base*0.25;vec3 sharp=base*1.25+vec3(0.03,0.06,0.08);float band=1.0-smoothstep(0.02,0.09,dist);col=mix(blurred,sharp,band);float line=1.0-smoothstep(0.0,0.004,dist);vec3 lineCol=vec3(0.6,0.95,1.0);col+=lineCol*line*0.8;}else if(uUniverse<1.5){float z=saturate(uMorph);vec3 wallWide=texture2D(uTex,clamp(uv,0.0,1.0)).rgb;vec3 structWide=wallWide*1.05+vec3(0.02,0.03,0.04);vec2 center=vec2(0.55,0.50);vec2 d=uv-center;float dist=length(d);float zoomPhase=smoothstep(0.1,0.8,z);float zoomFactor=mix(1.0,4.5,zoomPhase);float patchRadius=mix(0.46,0.14,zoomPhase);float edge=0.06;float patchMask=1.0-smoothstep(patchRadius+edge,patchRadius-edge,dist);vec2 uvMicro=center+d*zoomFactor;uvMicro=clamp(uvMicro,0.0,1.0);vec3 baseMicro=texture2D(uTex,uvMicro).rgb;float lum=dot(baseMicro,vec3(0.299,0.587,0.114));float fibreDir=uvMicro.y*40.0+lum*6.0;float fibrePattern=sin(fibreDir);float fibreMask=1.0-smoothstep(0.35,0.8,abs(fibrePattern));fibreMask*=smoothstep(0.25,0.85,lum);vec3 fibreCol=vec3(0.10,0.90,0.80)*fibreMask;vec2 metaUV=uvMicro*16.0;vec2 cell=floor(metaUV);vec2 f=fract(metaUV)-0.5;float metaSeed=hash(cell);float slide=fract(metaSeed+uTime*0.12);vec2 centre=vec2(0.0,mix(-0.5,0.5,slide));float metaDist=length(f-centre);float coreA=smoothstep(0.32,0.16,metaDist);float shellA=smoothstep(0.26,0.20,metaDist);float coreB=smoothstep(0.26,0.12,metaDist);float shellB=smoothstep(0.20,0.16,metaDist);float primaryDot=max(0.0,coreA-shellA);float secondaryDot=max(0.0,coreB-shellB);float fibreInfluence=smoothstep(0.2,0.8,fibreMask);primaryDot*=fibreInfluence;secondaryDot*=fibreInfluence;vec3 metaPrimary=vec3(0.98,0.72,0.25)*primaryDot;vec3 metaSecondary=vec3(0.98,0.35,0.82)*secondaryDot;vec2 enzymeCoord=uvMicro*6.0+vec2(uTime*0.05,-uTime*0.03);float enzymeNoise=hash(enzymeCoord);float enzymePulse=smoothstep(0.78,0.98,enzymeNoise+0.25*sin(uTime*1.3));enzymePulse*=fibreMask;vec3 enzymeGlow=vec3(1.0,0.95,0.4)*enzymePulse;fibreCol=mix(fibreCol,fibreCol*0.4,enzymePulse*0.8);fibreCol+=enzymeGlow*0.8;vec3 molecular=vec3(0.0);molecular+=fibreCol*uChannels.r;molecular+=metaPrimary*uChannels.g;molecular+=metaSecondary*uChannels.b;vec3 structZoom=baseMicro*1.1+vec3(0.03,0.04,0.06);molecular+=structZoom*0.25;float molVis=smoothstep(0.35,1.0,z);col=structWide;col=mix(col,molecular,patchMask*molVis);float bandY=0.2+0.6*fract(uTime*0.08);float distBand=abs(uv.y-bandY);float bandMask=1.0-smoothstep(0.02,0.05,distBand);col=mix(col,molecular,bandMask*molVis*0.85);}else{vec3 bril=texture2D(uTex,clamp(uv,0.0,1.0)).rgb;float lum=dot(bril,vec3(0.299,0.587,0.114));float fx=smoothstep(0.06,0.08,uv.x)*(1.0-smoothstep(0.82,0.84,uv.x));float fy=smoothstep(0.12,0.14,uv.y)*(1.0-smoothstep(0.88,0.90,uv.y));float fieldMask=fx*fy;vec2 uvField=mix(uv,uvWarped,fieldMask);float gridCoarse=grid(uvField,12.0,0.015);float gridFine=grid(uvField+vec2(0.015,0.0),24.0,0.010);float mesh=saturate(gridCoarse*0.9+gridFine*0.6);mesh*=smoothstep(0.25,0.85,lum);mesh*=fieldMask;float pulse=0.5+0.5*sin(uTime*1.2+r*8.0);mesh*=mix(0.5,1.0,pulse);vec3 meshTint=vec3(0.40,0.95,0.85);vec3 meshCol=mix(bril*0.3,meshTint,mesh);float m=saturate(uMorph);col=mix(bril,meshCol,m);float scanPos=0.15+0.7*fract(uTime*0.08);float distX=abs(uv.x-scanPos);float band=(1.0-smoothstep(0.01,0.05,distX))*fieldMask;vec3 scanColor=vec3(1.0,1.0,1.0);col=mix(col,scanColor,band*0.18);}float vign=smoothstep(0.97,0.50,r);col*=vign;gl_FragColor=vec4(col,1.0);}`;
+
+/* REPLACE THE ENTIRE 'const FRAG = ...' STRING with this Premium Shader */
+
+const FRAG = `precision highp float;
+varying vec2 vUv;
+uniform sampler2D uTex;
+uniform vec2 uResolution;
+uniform float uTime;
+uniform float uUniverse; // 0=Micro, 1=Chem(unused here), 2=Model
+uniform float uScan;
+uniform vec3 uChannels;
+uniform float uMorph; // Stress/Focus
+
+// Color ramps
+vec3 viridis(float t) {
+    vec3 c0 = vec3(0.267, 0.003, 0.329);
+    vec3 c1 = vec3(0.127, 0.566, 0.550);
+    vec3 c2 = vec3(0.993, 0.906, 0.143);
+    return mix(c0, mix(c1, c2, smoothstep(0.4, 0.8, t)), smoothstep(0.0, 0.5, t));
+}
+
+vec3 magma(float t) {
+    return mix(vec3(0.05,0.05,0.1), vec3(1.0,0.2,0.1), t*t);
+}
+
+void main(){
+  vec2 uv = vUv;
+  vec4 baseTex = texture2D(uTex, uv);
+  vec3 col = baseTex.rgb;
+  float lum = dot(col, vec3(0.299, 0.587, 0.114));
+
+  // === WG1: Microscopy (Focus Peaking + Aberration) ===
+  if (uUniverse < 0.5) {
+      // Chromatic Aberration at edges
+      float dist = distance(uv, vec2(0.5));
+      float aber = 0.003 * (1.0 + uMorph * 2.0) * dist;
+      float r = texture2D(uTex, uv - aber).r;
+      float b = texture2D(uTex, uv + aber).b;
+      col = vec3(r, col.g, b);
+
+      // Focus Plane / Scan
+      float scanY = uScan;
+      float dScan = abs(uv.y - scanY);
+      
+      // Focus Peaking (Edge Detection)
+      float dx = 1.0/uResolution.x;
+      float dy = 1.0/uResolution.y;
+      float val = dot(texture2D(uTex, uv).rgb, vec3(0.333));
+      float valR = dot(texture2D(uTex, uv + vec2(dx, 0.0)).rgb, vec3(0.333));
+      float valU = dot(texture2D(uTex, uv + vec2(0.0, dy)).rgb, vec3(0.333));
+      float edge = length(vec2(val - valR, val - valU)) * 10.0;
+      
+      // Scan band logic
+      float focusWidth = 0.15;
+      float inFocus = 1.0 - smoothstep(0.0, focusWidth, dScan);
+      
+      // Peaking color (Cyan/Green)
+      vec3 peakColor = vec3(0.2, 1.0, 0.8);
+      
+      // Inside focus band: sharp + peaking
+      // Outside: blurred
+      if (inFocus > 0.01) {
+         col += edge * peakColor * inFocus * 0.8;
+      } else {
+         // Cheap blur via LOD bias simulation or just dimming
+         col *= 0.5; 
+         col += vec3(0.1, 0.15, 0.2) * 0.2; // blue tint
+      }
+      
+      // Scanline
+      float line = 1.0 - smoothstep(0.0, 0.005, dScan);
+      col += vec3(0.5, 0.9, 1.0) * line;
+  } 
+  
+  // === WG3: Modelling (FEM Mesh + Heatmap) ===
+  else {
+      float stress = uMorph; // 0..1
+      
+      // Deform grid based on brightness and stress
+      vec2 gridUV = uv;
+      float displacement = lum * stress * 0.15;
+      gridUV += vec2(displacement);
+      
+      // Grid lines
+      float scale = 30.0;
+      vec2 g = abs(fract(gridUV * scale) - 0.5);
+      float mesh = 1.0 - smoothstep(0.02, 0.05, min(g.x, g.y));
+      
+      // Heatmap overlay
+      // Areas with high displacement get 'hot' colors
+      vec3 stressColor = magma(displacement * 6.0 + stress * 0.2);
+      
+      // Composite
+      vec3 wireframe = vec3(0.0);
+      if (mesh > 0.1) {
+          wireframe = mix(vec3(0.2), stressColor, 0.8);
+      }
+      
+      // Base model fade
+      col = mix(col * 0.3, col, 1.0 - stress * 0.5); 
+      
+      // Add mesh
+      col = mix(col, wireframe, mesh * 0.6);
+      
+      // Highlight high stress areas
+      col += stressColor * stress * lum * 0.4;
+  }
+
+  // Global vignette
+  float v = 1.0 - length(uv - 0.5) * 0.8;
+  col *= smoothstep(0.0, 1.0, v);
+
+  gl_FragColor = vec4(col, 1.0);
+}`;
+
 
 /** Compile helper with logs */
 function compile(gl, type, src) {
@@ -291,292 +405,147 @@ export function computeChemOpacityFromZoom(zoom) {
  * @param {string} [opts.rootImageSrc]
  * @param {string} [opts.zoomImageSrc]
  */
+/* REPLACE existing createChemistryWallCanvasV1 function */
+
 export function createChemistryWallCanvasV1(opts) {
   const canvas = opts.canvas;
   const ctx = canvas.getContext("2d");
   if (!ctx) throw new Error("2D context unavailable");
 
+  // WG2: Deep Learning / Computer Vision Theme
   const ROOT_IMAGE_SRC = opts.rootImageSrc || "./images/arabidopsis_root_stained_with_pectin_probe.webp";
-  const ZOOM_IMAGE_SRC = opts.zoomImageSrc || "./images/atroot_zoom.png";
-
+  
   let zoom = opts.zoom;
-  /** @type {[number,number,number]} */ let channels = opts.channels || [1, 1, 1];
+  // Channels map to: [0]=Image Visibility, [1]=Analysis Overlay, [2]=Bounding Boxes
+  let channels = opts.channels || [1, 1, 1]; 
 
-  /** @type {{width:number,height:number}} */ let dims = { width: 0, height: 0 };
-  /** @type {number|null} */ let lastTime = null;
-  /** @type {number} */ let raf = 0;
+  let dims = { width: 0, height: 0 };
+  let raf = 0;
+  let img = null;
+  let detections = []; 
+  let scanY = 0;
 
-  /** @type {Array<any>} */ let bundles = [];
-  /** @type {Array<any>} */ let metabolites = [];
-  /** @type {Array<any>} */ let pulses = [];
+  // Load image
+  const i = new Image();
+  i.crossOrigin = "anonymous";
+  i.src = ROOT_IMAGE_SRC;
+  i.onload = () => { img = i; generateDetections(); };
 
-  /** @type {HTMLImageElement|null} */ let rootImg = null;
-  /** @type {HTMLImageElement|null} */ let zoomImg = null;
-
-  const loadImg = (src, cb) => {
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.onload = () => { log("Chem img loaded:", src); cb(img); };
-    img.onerror = () => err("Chem img failed:", src);
-    img.src = src;
-    return img;
-  };
-  loadImg(ROOT_IMAGE_SRC, (img) => { rootImg = img; });
-  loadImg(ZOOM_IMAGE_SRC, (img) => { zoomImg = img; });
-
-  const initScene = (w, h) => {
-    dims = { width: w, height: h };
-    bundles = [];
-    const bundleCount = 11;
-    for (let i = 0; i < bundleCount; i++) {
-      const t = i / (bundleCount - 1);
-      const centerY = h * (0.25 + 0.5 * t) + (Math.random() - 0.5) * 14;
-      bundles.push({ centerY, thickness: 10 + Math.random() * 12, phase: Math.random() * Math.PI * 2, warp: 8 + Math.random() * 10, hue: 145 + Math.random() * 35 });
-    }
-    metabolites = [];
-    for (let i = 0; i < bundles.length; i++) {
-      const count = 4 + Math.floor(Math.random() * 4);
-      for (let j = 0; j < count; j++) {
-        metabolites.push({ bundleIndex: i, u: Math.random(), speed: 0.08 + Math.random() * 0.08, offset: (Math.random() - 0.5) * 12, radius: 2.5 + Math.random() * 1.5, type: Math.random() < 0.4 ? "secondary" : "primary" });
-      }
-    }
-    pulses = [];
+  // Create fake "bounding box" data
+  const generateDetections = () => {
+     detections = [];
+     for(let k=0; k<12; k++) {
+       detections.push({
+         x: 0.2 + Math.random() * 0.6,
+         y: 0.2 + Math.random() * 0.6,
+         w: 0.05 + Math.random() * 0.1,
+         h: 0.05 + Math.random() * 0.1,
+         label: Math.random() > 0.5 ? "WALL " + (Math.random()*0.9).toFixed(2) : "JUNC " + (Math.random()*0.9).toFixed(2),
+         color: Math.random() > 0.5 ? "#00ffcc" : "#ff00ff"
+       });
+     }
   };
 
-  const handleResize = () => {
-    const rect = canvas.getBoundingClientRect();
-    if (!rect.width || !rect.height) return;
-    const dpr = Math.min(2, window.devicePixelRatio || 1);
-    canvas.width = Math.max(1, Math.floor(rect.width * dpr));
-    canvas.height = Math.max(1, Math.floor(rect.height * dpr));
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    initScene(rect.width, rect.height);
+  const resize = () => {
+    const r = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = r.width * dpr;
+    canvas.height = r.height * dpr;
+    ctx.scale(dpr, dpr);
+    dims = { width: r.width, height: r.height };
   };
 
   const draw = (time) => {
     const { width, height } = dims;
     if (!width || !height) { raf = requestAnimationFrame(draw); return; }
-
-    const z = zoom;
-    const zoomNorm = clamp((z - 1) / 49, 0, 1);
-    const bundleWeight = channels[0], primaryWeight = channels[1], secondaryWeight = channels[2];
-
-    const tSec = time / 1000;
-    const last = lastTime ?? time;
-    const dt = Math.min(0.05, (time - last) / 1000);
-    lastTime = time;
-
-    ctx.clearRect(0, 0, width, height);
-
-    const phaseRoot = clamp(1 - zoomNorm / 0.7, 0, 1);
-    const phaseZoom = smoothstep(0.15, 0.7, zoomNorm);
-
-    if ((rootImg || zoomImg) && (phaseRoot > 0.02 || phaseZoom > 0.02)) {
-      ctx.save();
-      ctx.fillStyle = "black";
-      ctx.fillRect(0, 0, width, height);
-
-      if (rootImg && phaseRoot > 0.02) {
-        ctx.save();
-        ctx.globalAlpha = phaseRoot;
-        const baseScaleRoot = Math.max(width / rootImg.width, height / rootImg.height);
-        const maxExtraZoom = 1.7;
-        const zoomFactor = 1 + zoomNorm * (maxExtraZoom - 1);
-        const rootScale = baseScaleRoot * zoomFactor;
-        const rootW = rootImg.width * rootScale;
-        const rootH = rootImg.height * rootScale;
-        const rootX = width / 2 - rootW * (0.4 + zoomNorm * 0.1);
-        const rootY = height / 2 - rootH * 0.6;
-        ctx.filter = "contrast(1.2) saturate(1.35) brightness(0.9)";
-        ctx.drawImage(rootImg, rootX, rootY, rootW, rootH);
-        ctx.filter = "none";
-        ctx.restore();
-      }
-
-      if (zoomImg && phaseZoom > 0.02) {
-        ctx.save();
-        ctx.globalAlpha = phaseZoom;
-        const baseScaleZoom = Math.max(width / zoomImg.width, height / zoomImg.height);
-        const extraZoom = 1.4 + zoomNorm * 1.2;
-        const zoomScale = baseScaleZoom * extraZoom;
-        const zoomW = zoomImg.width * zoomScale;
-        const zoomH = zoomImg.height * zoomScale;
-        const zoomX = width / 2 - zoomW * 0.6;
-        const zoomY = height / 2 - zoomH * 0.7;
-        ctx.filter = "contrast(1.5) saturate(1.6)";
-        ctx.drawImage(zoomImg, zoomX, zoomY, zoomW, zoomH);
-        ctx.filter = "none";
-
-        const cx = width * 0.6, cy = height * 0.5;
-        const rBase = Math.min(width, height) * 0.26;
-        const rr = rBase * (0.8 + zoomNorm * 0.9);
-        const g = ctx.createRadialGradient(cx, cy, rr * 0.5, cx, cy, rr);
-        g.addColorStop(0, "rgba(0,0,0,0)");
-        g.addColorStop(1, "rgba(0,0,0,0.95)");
-        ctx.fillStyle = g;
-        ctx.fillRect(0, 0, width, height);
-
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = "rgba(123,255,218,0.9)";
-        ctx.beginPath();
-        ctx.arc(cx, cy, rr, 0, Math.PI * 2);
-        ctx.stroke();
-
-        ctx.restore();
-      }
-      ctx.restore();
-    }
-
-    const simPhase = smoothstep(0.5, 0.9, zoomNorm);
-    if (simPhase <= 0.01) { raf = requestAnimationFrame(draw); return; }
-
-    ctx.save();
-    ctx.globalAlpha = simPhase;
-
-    const bgGrad = ctx.createLinearGradient(0, 0, width, height);
-    bgGrad.addColorStop(0, "rgba(3,8,18,0.95)");
-    bgGrad.addColorStop(0.4, "rgba(4,18,40,0.98)");
-    bgGrad.addColorStop(1, "rgba(2,5,12,1)");
-    ctx.fillStyle = bgGrad;
+    
+    // Background: Dark "Lab Monitor" Grey
+    ctx.fillStyle = "#0f172a"; 
     ctx.fillRect(0, 0, width, height);
 
-    ctx.save();
-    ctx.globalAlpha = 0.08 * simPhase;
-    const cellSize = 36;
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = "rgba(123,255,218,0.45)";
-    for (let y = height * 0.25; y < height * 0.8; y += cellSize) {
-      ctx.beginPath();
-      ctx.moveTo(width * 0.12, y);
-      ctx.lineTo(width * 0.88, y + Math.sin(y * 0.01) * 3);
-      ctx.stroke();
-    }
-    ctx.restore();
-
-    if (Math.random() < 0.03 * simPhase) {
-      const b = bundles[Math.floor(Math.random() * bundles.length)];
-      const x = width * (0.15 + Math.random() * 0.7);
-      pulses.push({ x, y: b.centerY + (Math.random() - 0.5) * (b.thickness * 0.7), radius: 0, life: 0 });
-    }
-    for (let i = pulses.length - 1; i >= 0; i--) {
-      const p = pulses[i];
-      p.life += dt * (0.7 + simPhase);
-      p.radius += dt * 48;
-      if (p.life >= 1) pulses.splice(i, 1);
-    }
-
-    ctx.save();
-    for (let i = 0; i < bundles.length; i++) {
-      const b = bundles[i];
-      const warpAmount = b.warp;
-      const bundleAlpha = (0.4 + 0.35 * simPhase) * bundleWeight;
-      if (bundleAlpha < 0.02) continue;
-
-      const half = b.thickness * (0.6 + simPhase * 0.6);
-      const segments = 52;
-
-      ctx.beginPath();
-      for (let s = 0; s <= segments; s++) {
-        const u = s / segments;
-        const x = width * (0.1 + 0.8 * u);
-        const base = b.centerY;
-        const curve = Math.sin(u * Math.PI * 2 + b.phase) * warpAmount;
-        const yTop = base + curve - half;
-        if (s === 0) ctx.moveTo(x, yTop); else ctx.lineTo(x, yTop);
-      }
-      for (let s = segments; s >= 0; s--) {
-        const u = s / segments;
-        const x = width * (0.1 + 0.8 * u);
-        const base = b.centerY;
-        const curve = Math.sin(u * Math.PI * 2 + b.phase) * warpAmount;
-        const yBottom = base + curve + half;
-        ctx.lineTo(x, yBottom);
-      }
-      ctx.closePath();
-
-      const hueShift = 15 * (i / bundles.length) - 7;
-      const baseHue = b.hue + hueShift;
-      const fillColor = `hsla(${baseHue}, 80%, ${40 + simPhase * 15}%, ${bundleAlpha})`;
-      const edgeColor = `hsla(${baseHue + 10}, 90%, ${58 + simPhase * 8}%, ${bundleAlpha * 1.2})`;
-
-      ctx.fillStyle = fillColor;
-      ctx.shadowColor = `hsla(${baseHue}, 90%, 70%, ${0.4 * simPhase * bundleWeight})`;
-      ctx.shadowBlur = 14 * simPhase * bundleWeight;
-      ctx.fill();
+    if (img && channels[0] > 0.5) {
+      // Calculate fit
+      const scale = Math.min(width / img.width, height / img.height) * (0.8 + zoom * 0.05);
+      const iw = img.width * scale;
+      const ih = img.height * scale;
+      const ix = (width - iw) / 2;
+      const iy = (height - ih) / 2;
 
       ctx.save();
-      ctx.shadowBlur = 0;
-      ctx.lineWidth = 1.4 + simPhase * 0.7;
-      ctx.strokeStyle = edgeColor;
-      ctx.beginPath();
-      for (let s = 0; s <= segments; s++) {
-        const u = s / segments;
-        const x = width * (0.1 + 0.8 * u);
-        const base = b.centerY;
-        const curve = Math.sin(u * Math.PI * 2 + b.phase) * warpAmount;
-        const yMid = base + curve;
-        if (s === 0) ctx.moveTo(x, yMid); else ctx.lineTo(x, yMid);
+      
+      // "Analyzed" look: slightly desaturated and high contrast
+      if (channels[1] > 0.5) {
+        ctx.filter = "contrast(1.2) grayscale(0.8) brightness(0.7)";
       }
-      ctx.stroke();
+      ctx.drawImage(img, ix, iy, iw, ih);
       ctx.restore();
+
+      // Scanning Laser Line
+      scanY = (time * 0.0004) % 1.2; 
+      const lineY = iy + scanY * ih;
+
+      if (channels[1] > 0.5) {
+        // Draw Laser
+        ctx.beginPath();
+        ctx.moveTo(ix, lineY);
+        ctx.lineTo(ix+iw, lineY);
+        ctx.strokeStyle = "rgba(56, 189, 248, 0.8)"; // WG2 Blue/Cyan
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        
+        // Scan Trail
+        const grad = ctx.createLinearGradient(0, lineY - 40, 0, lineY);
+        grad.addColorStop(0, "rgba(56, 189, 248, 0)");
+        grad.addColorStop(1, "rgba(56, 189, 248, 0.2)");
+        ctx.fillStyle = grad;
+        ctx.fillRect(ix, lineY - 40, iw, 40);
+      }
+
+      // Draw Bounding Boxes (if laser has passed them)
+      if (channels[2] > 0.5) {
+        ctx.lineWidth = 1.5;
+        ctx.font = "10px monospace";
+
+        detections.forEach(d => {
+          const dy = iy + d.y * ih;
+          // Reveal if scan passed or if zoomed in
+          if (lineY > dy || zoom > 5) {
+             const dx = ix + d.x * iw;
+             const dw = d.w * iw;
+             const dh = d.h * ih;
+
+             ctx.strokeStyle = d.color;
+             ctx.strokeRect(dx, dy, dw, dh);
+             
+             // Label bg
+             ctx.fillStyle = d.color;
+             ctx.fillRect(dx, dy - 12, dw, 12);
+             
+             // Label text
+             ctx.fillStyle = "#000";
+             ctx.fillText(d.label, dx + 2, dy - 2);
+             
+             // Mask overlay
+             ctx.fillStyle = d.color + "22"; // Low opacity hex
+             ctx.fillRect(dx, dy, dw, dh);
+          }
+        });
+      }
     }
-    ctx.restore();
 
-    ctx.save();
-    for (const p of pulses) {
-      const alpha = (1 - p.life) * (0.6 + 0.3 * simPhase) * bundleWeight;
-      if (alpha < 0.02) continue;
-      const coreR = p.radius * 0.4;
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,221,122,${alpha * 0.45})`; ctx.fill();
-      ctx.beginPath(); ctx.arc(p.x, p.y, coreR, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,221,122,${alpha})`; ctx.fill();
-    }
-    ctx.restore();
-
-    for (const m of metabolites) { m.u += m.speed * dt * (0.5 + simPhase * 1.3); if (m.u > 1.15) m.u -= 1.2; }
-
-    ctx.save();
-    for (const m of metabolites) {
-      const b = bundles[m.bundleIndex];
-      const layerWeight = m.type === "secondary" ? secondaryWeight : primaryWeight;
-      if (layerWeight < 0.05) continue;
-
-      const u = m.u;
-      const x = width * (0.1 + 0.8 * u);
-      const base = b.centerY;
-      const curve = Math.sin(u * Math.PI * 2 + b.phase) * b.warp;
-      const baseY = base + curve + m.offset;
-
-      const pulse = 1 + 0.5 * Math.sin(tSec * 4 + m.offset);
-      const rr = m.radius * (0.8 + simPhase * 0.9) * pulse;
-
-      const baseAlpha = 0.7 + simPhase * 0.3;
-      const alpha = baseAlpha * layerWeight;
-
-      ctx.beginPath();
-      ctx.arc(x, baseY, rr, 0, Math.PI * 2);
-      if (m.type === "secondary") { ctx.fillStyle = `rgba(255,122,228,${alpha})`; ctx.shadowColor = "rgba(255,122,228,0.9)"; }
-      else { ctx.fillStyle = `rgba(123,255,218,${alpha})`; ctx.shadowColor = "rgba(123,255,218,0.9)"; }
-      ctx.shadowBlur = 12 * layerWeight;
-      ctx.fill();
-    }
-    ctx.restore();
-
-    ctx.restore();
     raf = requestAnimationFrame(draw);
   };
 
-  handleResize();
-  window.addEventListener("resize", handleResize);
+  window.addEventListener("resize", resize);
+  resize();
   raf = requestAnimationFrame(draw);
 
   return {
-    setZoom(v) { zoom = v; },
-    setChannels(rgb) { channels = rgb; },
+    setZoom(z) { zoom = z; },
+    setChannels(c) { channels = c; },
     destroy() {
-      window.removeEventListener("resize", handleResize);
-      if (raf) cancelAnimationFrame(raf);
+      window.removeEventListener("resize", resize);
+      cancelAnimationFrame(raf);
     }
   };
 }

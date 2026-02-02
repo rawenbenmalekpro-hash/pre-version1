@@ -636,49 +636,128 @@ a:hover { color: var(--color-link-hover); }
   box-shadow: var(--glow-soft);
 }
 
-/* ======== WG Cards & Lab Universes ======== */
-
+/* === WG Premium Layout (Disposition) === */
 .wg-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: 1fr; /* Mobile: Stacked */
   gap: var(--space-6);
-}
-
-.wg-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: var(--space-8);
   align-items: stretch;
 }
 
+/* Tablet: The "Foundation" Layout (1 Top, 2 Bottom) */
+@media (min-width: 700px) and (max-width: 1199px) {
+  .wg-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+  }
+  
+  /* WG1 is the "Central Pillar" -> Full Width Top */
+  .wg-card#wg1 {
+    grid-column: 1 / -1; 
+  }
+}
+
+/* Desktop: The "Triptych" Layout (3 Columns) */
+@media (min-width: 1200px) {
+  .wg-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+  }
+  .wg-card#wg1 {
+    grid-column: auto;
+  }
+}
+
+/* WG Card Premium Styling */
 .wg-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-xl);
-  padding: var(--space-8);
+  /* Existing glass styles maintained, adding accent top border */
+  border-top-width: 4px; 
+  position: relative;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.wg-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--surface-shadow);
+}
+
+/* Distinct accents per WG */
+#wg1 { border-top-color: var(--color-wg1); }
+#wg2 { border-top-color: var(--color-wg2); }
+#wg3 { border-top-color: var(--color-wg3); }
+
+/* === Premium About Section === */
+/* Intro Text ("Manifesto") */
+[data-section="learn-more"] .glass-card > p {
+  font-size: 1.15rem; /* Larger text */
+  line-height: 1.7;
+  color: var(--text-primary);
+  padding-left: var(--space-4);
+  border-left: 3px solid var(--color-accent);
+  margin-bottom: var(--space-5);
+}
+
+/* Data Modules (Mission/Scope/Instruments) */
+[data-section="learn-more"] .grant-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-8);
+}
+
+[data-section="learn-more"] .grant-card {
+  background: rgba(15, 23, 42, 0.6); /* Darker, technical look */
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+}
+
+[data-section="learn-more"] .grant-card h3 {
+  font-family: monospace;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  color: var(--color-accent);
+  opacity: 0.9;
+  margin-bottom: var(--space-4);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: var(--space-2);
+}
+
+[data-section="learn-more"] details summary {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* === Home Registrations Grid === */
+.registrations-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--border-default);
+}
+
+@media (min-width: 700px) {
+  .registrations-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.feature-alert {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
   display: flex;
   flex-direction: column;
-  height: 100%;
+  transition: background-color 0.2s;
 }
 
-.wg-card__description {
-  font-size: var(--text-sm);
-  line-height: var(--leading-relaxed);
-  color: var(--text-secondary);
-  margin-bottom: var(--space-6);
-  flex-grow: 1;
-}
-
-.wg-card__details summary {
-  color: var(--color-link);
-  font-weight: 600;
-  cursor: pointer;
-  padding: var(--space-2) 0;
-}
-
-.wg-card__toggle {
-  margin-top: auto; /* Aligns buttons at the bottom across cards */
+.feature-alert:hover {
+  background: var(--bg-surface-elevated);
+  border-color: var(--color-accent);
 }
 
 /* Learn More Restyle */
@@ -752,12 +831,134 @@ a:hover { color: var(--color-link-hover); }
     box-shadow var(--transition-fast);
 }
 
-.wg-card__toggle:hover {
-  background: var(--bg-glass-hover);
-  border-color: var(--color-link);
-  box-shadow: var(--glow-soft);
-  transform: translateY(-1px);
+/* === Task 1: Premium Accordions (Learn More) === */
+.grant-cards[aria-label="Mission scope instruments"] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
 }
+
+.grant-cards[aria-label="Mission scope instruments"] .grant-card {
+  border-left: 1px solid var(--glass-border); /* Reset default border */
+  padding: 0;
+  background: var(--glass-bg);
+  transition: all var(--transition-base);
+}
+
+.grant-cards[aria-label="Mission scope instruments"] .grant-card:has(details[open]) {
+  background: var(--bg-surface-elevated);
+  border-left: 4px solid var(--color-accent);
+  box-shadow: var(--shadow-md);
+}
+
+.grant-cards[aria-label="Mission scope instruments"] details {
+  width: 100%;
+}
+
+.grant-cards[aria-label="Mission scope instruments"] summary {
+  padding: var(--space-5) var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  font-weight: 700;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.grant-cards[aria-label="Mission scope instruments"] summary::-webkit-details-marker { display: none; }
+
+.grant-cards[aria-label="Mission scope instruments"] summary::after {
+  content: '→';
+  font-family: monospace;
+  font-size: 1.2em;
+  transition: transform var(--transition-base);
+  color: var(--color-accent);
+}
+
+.grant-cards[aria-label="Mission scope instruments"] details[open] summary::after {
+  transform: rotate(90deg);
+}
+
+.grant-cards[aria-label="Mission scope instruments"] h3 {
+  margin: 0;
+  font-size: var(--text-lg);
+  display: inline-block;
+  pointer-events: none; /* Let click pass to summary */
+}
+
+/* Hide the original H3 inside the article to avoid duplication if strictly restructuring,
+   but since we can't change HTML text, we style the container to look cohesive.
+   We assume the structure is article > h3 + details. We make h3 flow into details visually. */
+.grant-cards[aria-label="Mission scope instruments"] .grant-card > h3 {
+  display: none; /* We hide the outer title to let the summary drive the UI, 
+                    OR we style the outer title to look like the header. 
+                    Given the HTML structure (h3 sibling to details), we style the H3 as a label. */
+  display: block;
+  padding: var(--space-5) var(--space-6) 0;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  border-bottom: none;
+  margin-bottom: -1rem;
+  position: relative;
+  z-index: 2;
+}
+
+.grant-cards[aria-label="Mission scope instruments"] details > div {
+  padding: 0 var(--space-6) var(--space-6);
+  border-top: 1px solid var(--border-subtle);
+  margin-top: var(--space-2);
+  padding-top: var(--space-4);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+/* === Task 2: WG Checklists & Layout === */
+.wg-card__tasks ol {
+  list-style: none;
+  counter-reset: wg-task;
+  padding: 0;
+  margin: var(--space-4) 0;
+}
+
+.wg-card__tasks li {
+  position: relative;
+  padding-left: 3rem;
+  margin-bottom: var(--space-4);
+  counter-increment: wg-task;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.wg-card__tasks li::before {
+  content: counter(wg-task);
+  position: absolute;
+  left: 0; top: 0;
+  width: 1.8rem; height: 1.8rem;
+  border-radius: 50%;
+  background: var(--bg-glass-active);
+  border: 1px solid var(--border-default);
+  color: var(--color-accent);
+  font-weight: 700;
+  font-size: 0.8em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* === Task 4: Feature Alert (Home) === */
+.feature-alert {
+  background: linear-gradient(to right, rgba(59, 130, 246, 0.08), transparent);
+  border-left: 3px solid var(--color-accent);
+  padding-left: var(--space-4);
+}
+
+
+
 
 .wg-card__toggle-label { text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.68rem; }
 .wg-card__toggle-hint { font-size: 0.75rem; color: var(--text-secondary); }
@@ -1214,6 +1415,80 @@ a:hover { color: var(--color-link-hover); }
 }
 
 .a11y-overlay--visible { opacity: 1; visibility: visible; }
+
+/* === Home Registrations Grid === */
+.registrations-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--border-default);
+}
+
+@media (max-width: 700px) {
+  .registrations-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.feature-alert {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.feature-alert:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+  background: var(--bg-surface-elevated);
+}
+
+/* === Premium About Section (Learn More) === */
+/* Target the specific section to avoid breaking others */
+[data-section="learn-more"] .glass-card > p {
+  font-size: var(--text-lg);
+  line-height: 1.7;
+  color: var(--text-primary);
+  margin-bottom: var(--space-6);
+  padding-left: var(--space-4);
+  border-left: 3px solid var(--color-accent); /* Technical accent bar */
+}
+
+/* Mission/Scope/Instruments Container */
+[data-section="learn-more"] .grant-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Bento grid */
+  gap: var(--space-4);
+  margin-top: var(--space-8);
+}
+
+/* The individual cards (Mission/Scope/Instruments) */
+[data-section="learn-more"] .grant-card {
+  background: rgba(10, 15, 30, 0.4); /* Darker "data" background */
+  border: 1px solid var(--border-default);
+  backdrop-filter: blur(10px);
+}
+
+[data-section="learn-more"] .grant-card h3 {
+  font-family: monospace; /* Technical feel */
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: var(--text-sm);
+  color: var(--color-accent);
+  opacity: 0.8;
+}
+
+[data-section="learn-more"] details summary {
+  font-weight: 600;
+  font-size: var(--text-lg); /* Larger headers */
+}
+
+[data-section="learn-more"] details[open] {
+  background: rgba(var(--color-accent-rgb), 0.05); /* Subtle glow when open */
+}
 
 /* ======== Reduced Motion ======== */
 @media (prefers-reduced-motion: reduce) {

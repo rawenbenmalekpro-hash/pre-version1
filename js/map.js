@@ -482,18 +482,20 @@ function processMapData(data) {
 function buildCalloutContent(data, expanded) {
     const countryName = data.name || data.code;
     let html = `<div class="map-callout__title-row"><div class="map-callout__title">${escapeHtml(countryName)}</div></div>`;
-
     if (data.mc && data.mc.length > 0) {
-      html += `<ul class="map-callout__leaders" style="margin-top:8px; list-style:none; padding:0;">`;
+      // MC Present: Show list
+      html += `<div style="margin-top:8px; font-weight:600; font-size:0.85em; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:4px;">Management Committee</div>`;
+      html += `<ul class="map-callout__leaders" style="list-style:none; padding:0; margin:0;">`;
       data.mc.forEach(p => {
-        html += `<li style="margin-bottom:6px; font-size:0.9em; border-left:2px solid var(--color-accent); padding-left:8px;">
-          <strong>${escapeHtml(p.name)}</strong><br>
-          <span style="opacity:0.8; font-size:0.85em">${escapeHtml(p.role || 'MC Member')}</span>
+        html += `<li style="margin-bottom:6px; font-size:0.9em; padding-left:8px; border-left:2px solid var(--color-accent);">
+          <strong style="display:block; line-height:1.2">${escapeHtml(p.name)}</strong>
+          <span style="font-size:0.85em; opacity:0.8">${escapeHtml(p.role || 'MC Member')}</span>
         </li>`;
       });
       html += `</ul>`;
     } else {
-      html += `<div class="map-callout__stat" style="margin-top:8px; opacity:0.8; font-style:italic;">Participating country</div>`;
+      // No MC: Just text, no buttons, no lists
+      html += `<div class="map-callout__stat" style="margin-top:8px; padding-top:8px; border-top:1px solid var(--border-subtle); color:var(--text-secondary);">Participating country</div>`;
     }
 
     state.calloutEl.innerHTML = html;

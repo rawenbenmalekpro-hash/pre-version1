@@ -1063,15 +1063,28 @@
 
         const scanInput = root.querySelector('input[type="range"][data-universe-control="wg1-intensity"]');
         const scan = scanInput ? clamp01(parseFloat(scanInput.value) / 100) : 0.35;
+        // Throttled resize for performance
+let resizeTimeout;
+const throttledResize = () => {
+  if (resizeTimeout) cancelAnimationFrame(resizeTimeout);
+  resizeTimeout = requestAnimationFrame(() => runtime?.resize?.());
+};
+window.addEventListener('resize', throttledResize);
 
-        runtime = mod.createUniverseCanvasV1({
-          universe: 'microscopy',
-          container,
-          imagePath: './images/asplenium_daucifolium_root_10x_upraveno.webp',
-          scan,
-          morph: 0,
-          channels: [1, 1, 1]
-        });
+runtime = mod.createUniverseCanvasV1({
+  universe: 'microscopy',
+  container,
+  imagePath: './images/asplenium_daucifolium_root_10x_upraveno.webp',
+  scan,
+  morph: 0,
+  channels: [1, 1, 1]
+});
+
+// Guardrail: Pause when tab is hidden
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) runtime?.pause?.();
+  else runtime?.resume?.();
+});
       }
 
       if (id === 'wg2-chemistry') {
@@ -1139,7 +1152,7 @@
         runtime = mod.createUniverseCanvasV1({
           universe: 'modelling',
           container,
-          imagePath: './images/micrasterias_cos_488_1_day_post_label.webp',
+          imagePath: './images/brillouin-map.png',
           scan: 0.2,
           morph,
           channels: [1, 1, 1]

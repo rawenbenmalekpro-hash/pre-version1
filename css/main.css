@@ -928,14 +928,18 @@ a:hover { color: var(--color-link-hover); }
   position: relative;
   z-index: 1;
   max-width: 1120px;
-  width: min(100% - 3rem, 1120px);
+  width: min(100% - 1.5rem, 1120px);
+  max-height: min(92vh, 850px);
   border-radius: var(--radius-2xl);
-  border: 1px solid var(--content-surface-border);
-  background: var(--content-surface-bg);
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.65);
-  padding: var(--space-6);
-  overflow: hidden;
+  /* ... existing styles ... */
+  padding: clamp(var(--space-4), 3vw, var(--space-8));
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 }
+
+
 
 .wg-universe-overlay__frame::before{
   content:'';

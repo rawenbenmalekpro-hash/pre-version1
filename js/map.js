@@ -162,7 +162,7 @@ function processMapData(data) {
         // If we don't have total participant numbers, we show MC count or hide
         pEl.innerText = totalMC; 
         const label = pEl.nextElementSibling;
-        if(label) label.innerText = "MC Members"; // Update label to be accurate
+        if(label) label.innerText = "Participants"; // Update label to be accurate
     }
 
     Object.entries(NAME_TO_CODE).forEach(([name, code]) => {

@@ -660,32 +660,41 @@
         : (sectionEl.getAttribute('data-bg') || id || 'hero');
     };
 
-    const resolveUrl = (key, theme) => {
+const resolveRaw = (key, theme) => {
       const th = theme || state.currentTheme || document.documentElement.getAttribute('data-theme') || 'dark';
       const themedMap = (data.bgMaps && data.bgMaps[th]) ? data.bgMaps[th] : null;
-
+      
       const themed = themedMap ? themedMap[key] : null;
       const legacy = data.bgMapFlat ? data.bgMapFlat[key] : null;
-
       const fallbackThemed = (themedMap && data.fallbackKey) ? themedMap[data.fallbackKey] : null;
       const fallbackLegacy = (data.bgMapFlat && data.fallbackKey) ? data.bgMapFlat[data.fallbackKey] : null;
 
-      const finalPath = themed || legacy || fallbackThemed || fallbackLegacy;
-      return finalPath ? `url('${finalPath}')` : '';
+      return themed || legacy || fallbackThemed || fallbackLegacy;
+    };
+
+    // 2. Compatibility wrapper for initial load (fixes "images stopped" bug)
+    const resolveUrl = (key, theme) => {
+      const raw = resolveRaw(key, theme);
+      if (Array.isArray(raw) && raw.length > 0) return `url('${raw[0]}')`;
+      if (raw) return `url('${raw}')`;
+      return '';
     };
 
     const last = { key: null, theme: null };
     let topIsA = true;
+    let rotationTimer = null;
+    let rotationIndex = 0;
 
-    function setVisibleLayer(url, animate) {
+      function setVisibleLayer(url, animate) {
       const incoming = topIsA ? layerB : layerA;
       const outgoing = topIsA ? layerA : layerB;
 
       if (!animate || reduced) {
+        // Update the currently visible layer directly
         outgoing.style.backgroundImage = url || '';
         outgoing.style.opacity = '1';
         incoming.style.opacity = '0';
-        topIsA = !topIsA;
+        // Fix: Do NOT flip topIsA here, as we updated the 'outgoing' (visible) layer
         return;
       }
 
@@ -703,21 +712,49 @@
 
       if (!data.fallbackKey) data.fallbackKey = key;
 
-      if (key === last.key && theme !== last.theme) {
-        const url = resolveUrl(key, theme) || '';
-        const live = topIsA ? layerA : layerB;
-        const hidden = topIsA ? layerB : layerA;
-        live.style.backgroundImage = url;
-        live.style.opacity = '1';
-        hidden.style.opacity = '0';
-        last.theme = theme;
-        return;
+      // Same section, same theme? Do nothing.
+      if (key === last.key && theme === last.theme) return;
+
+      // Clean up previous timer if any
+      if (rotationTimer) {
+        clearInterval(rotationTimer);
+        rotationTimer = null;
       }
 
-      if (key === last.key) return;
+      const raw = resolveRaw(key, theme);
+      
+      if (Array.isArray(raw) && raw.length > 0) {
+        // --- Slideshow Logic ---
+        rotationIndex = 0;
+        
+        const showNext = (useTransition) => {
+          const path = raw[rotationIndex];
+          const url = path ? `url('${path}')` : '';
+          setVisibleLayer(url, useTransition);
+          rotationIndex = (rotationIndex + 1) % raw.length;
+        };
 
-      const url = resolveUrl(key, theme) || '';
-      setVisibleLayer(url, !!animate);
+        // Show first image immediately
+        const isThemeSwitchOnly = (key === last.key);
+        showNext(!isThemeSwitchOnly && animate);
+
+        // Start cycling
+        rotationTimer = setInterval(() => {
+          showNext(true);
+        }, 5000); // 5 seconds per slide
+
+      } else {
+        // --- Single Image Logic ---
+        const url = raw ? `url('${raw}')` : '';
+        const isThemeSwitchOnly = (key === last.key);
+        
+        if (isThemeSwitchOnly) {
+           const live = topIsA ? layerA : layerB;
+           live.style.backgroundImage = url;
+        } else {
+           setVisibleLayer(url, !!animate);
+        }
+      }
 
       last.key = key;
       last.theme = theme;
@@ -764,16 +801,22 @@
       const initialKey = initial ? resolveKey(initial) : 'hero';
       data.fallbackKey = initialKey || 'hero';
 
+      // 1. Force immediate visual set (prevents white flash)
       const initialUrl = resolveUrl(data.fallbackKey, theme) || '';
       layerA.style.backgroundImage = initialUrl;
       layerB.style.backgroundImage = initialUrl;
       layerA.style.opacity = '1';
       layerB.style.opacity = '0';
       topIsA = true;
-      last.key = data.fallbackKey;
+
+      // 2. CRITICAL FIX: Set last.key to null so applyForSection runs the slideshow logic
+      last.key = null; 
       last.theme = theme;
 
       let active = initial || sections[0];
+
+      // 3. Trigger logic immediately (starts timer if array)
+      applyForSection(active, false);
 
       const io = new IntersectionObserver((entries) => {
         let bestEntry = null;
@@ -1210,7 +1253,7 @@ document.addEventListener('visibilitychange', () => {
       lastToggle = null;
     }
 
-    document.querySelectorAll('.wg-card').forEach(card => {
+      document.querySelectorAll('.wg-card, .trinity-panel').forEach(card => {
       const toggle = card.querySelector('.wg-card__toggle');
       const universe = card.querySelector('.wg-universe[data-universe-id]');
       if (!toggle || !universe) return;
@@ -1278,6 +1321,58 @@ document.addEventListener('visibilitychange', () => {
       try { btn.click(); } catch (e) { /* no-op */ }
     }
   }
+
+// ======== Trinity Tabs (WG) ========
+  function initTrinity() {
+    const nodes = document.querySelectorAll('.trinity-node');
+    const panels = document.querySelectorAll('.trinity-panel');
+    if (!nodes.length) return;
+
+    function activate(targetId) {
+      // Deactivate all
+      nodes.forEach(n => {
+        n.classList.remove('active');
+        n.setAttribute('aria-selected', 'false');
+      });
+      panels.forEach(p => {
+        p.classList.remove('active');
+        p.hidden = true;
+      });
+
+      // Activate target
+      const activeNode = document.querySelector(`.trinity-node[data-trinity-target="${targetId}"]`);
+      const activePanel = document.getElementById(`panel-${targetId}`);
+
+      if (activeNode && activePanel) {
+        activeNode.classList.add('active');
+        activeNode.setAttribute('aria-selected', 'true');
+        activePanel.classList.add('active');
+        activePanel.hidden = false;
+      }
+    }
+
+    nodes.forEach(node => {
+      node.addEventListener('click', (e) => {
+        const target = node.getAttribute('data-trinity-target');
+        if (target) activate(target);
+      });
+      
+      // Keyboard support
+      node.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          node.click();
+        }
+      });
+    });
+  }
+
+  // Hook into Init
+  const originalInit = init;
+  init = function() {
+    originalInit();
+    initTrinity();
+  };
 
   // ======== Bootstrap ========
   if (document.readyState === 'loading') {

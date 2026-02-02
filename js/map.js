@@ -17,7 +17,7 @@
     zoom: { min: 0.5, max: 8, step: 1.5 },
     paths: {
       topoJson: './data/world.topojson',
-      mapData: './content/map-data.json'
+      mapData: './content/combined-participation.json'
     },
     marker: {
       baseRadius: 5,
@@ -136,21 +136,40 @@
   }
 
   // ======== Data Processing ========
-  function processMapData(data) {
-    if (!data || !Array.isArray(data.countries)) return;
+function processMapData(data) {
+    if (!Array.isArray(data)) return;
 
-    data.countries.forEach(c => {
+    data.forEach(c => {
+      if (!c.code) return;
       state.participating.add(c.code);
       state.countryData.set(c.code, c);
-      if (c.name) {
-        state.nameToCodeMap.set(c.name.toLowerCase(), c.code);
-      }
     });
 
-    // Also add from hardcoded map
+    // Update global counters
+    const countryCount = data.length;
+    // Calculate total participants (MC members + simple counts if available, assuming minimal logic here as per prompt "global participant total")
+    // Note: Previous prompts implies we hide specific counts, but display global. 
+    // Since we don't have exact counts for non-MC countries in the CSV, we'll hide the participant counter or set it to MC count.
+    // The prompt says "include ALL the countries... not just MC members".
+    
+    const cEl = document.querySelector('.counter[data-target="26"] .counter__value');
+    if(cEl) cEl.innerText = countryCount;
+
+    // Remove participant counter if not provided, or show MC count
+    const totalMC = data.reduce((acc, c) => acc + (c.mc ? c.mc.length : 0), 0);
+    const pEl = document.querySelector('.counter[data-target="108"] .counter__value');
+    if(pEl) {
+        // If we don't have total participant numbers, we show MC count or hide
+        pEl.innerText = totalMC; 
+        const label = pEl.nextElementSibling;
+        if(label) label.innerText = "MC Members"; // Update label to be accurate
+    }
+
     Object.entries(NAME_TO_CODE).forEach(([name, code]) => {
       state.nameToCodeMap.set(name.toLowerCase(), code);
     });
+
+    renderTable(data);
   }
 
   function processTopoJson(topo) {
@@ -460,69 +479,26 @@
   }
 
   // ======== Callout Content (DATA POLICY APPLIED) ========
-  function buildCalloutContent(data, expanded) {
-    const hasLeadership = Boolean(data.hasLeadership);
-    const leadership = Array.isArray(data.leadership) ? data.leadership : [];
+function buildCalloutContent(data, expanded) {
+    const countryName = data.name || data.code;
+    let html = `<div class="map-callout__title-row"><div class="map-callout__title">${escapeHtml(countryName)}</div></div>`;
 
-    const wgPresence = {
-      wg1: Boolean(data.wg1),
-      wg2: Boolean(data.wg2),
-      wg3: Boolean(data.wg3)
-    };
-
-    const leadershipBadge = hasLeadership
-      ? `<span class="leadership-badge"><span class="leadership-badge__dot" aria-hidden="true"></span>${escapeHtml(t('leadership'))}</span>`
-      : '';
-
-    // Leadership names and roles (allowed) - ALWAYS show if available
-    let leadersHtml = '';
-    if (hasLeadership && leadership.length > 0) {
-      leadersHtml = `<ul class="map-callout__leaders">${leadership.map(p => (
-        `<li><strong>${escapeHtml(p.name)}</strong>${p.role ? ` — ${escapeHtml(p.role)}` : ''}</li>`
-      )).join('')}</ul>`;
+    if (data.mc && data.mc.length > 0) {
+      html += `<ul class="map-callout__leaders" style="margin-top:8px; list-style:none; padding:0;">`;
+      data.mc.forEach(p => {
+        html += `<li style="margin-bottom:6px; font-size:0.9em; border-left:2px solid var(--color-accent); padding-left:8px;">
+          <strong>${escapeHtml(p.name)}</strong><br>
+          <span style="opacity:0.8; font-size:0.85em">${escapeHtml(p.role || 'MC Member')}</span>
+        </li>`;
+      });
+      html += `</ul>`;
+    } else {
+      html += `<div class="map-callout__stat" style="margin-top:8px; opacity:0.8; font-style:italic;">Participating country</div>`;
     }
 
-    // WG pills ONLY (presence encoding)
-    const pillsHtml = `
-      <div class="map-callout__pills" aria-label="${escapeHtml(t('workingGroups'))}">
-        ${pillSpan('wg1', t('wg1') || 'WG1', wgPresence.wg1)}
-        ${pillSpan('wg2', t('wg2') || 'WG2', wgPresence.wg2)}
-        ${pillSpan('wg3', t('wg3') || 'WG3', wgPresence.wg3)}
-      </div>`;
-
-    // Member count (aggregate only, no names)
-    const memberStat = `<div class="map-callout__stat">${data.members} ${t('members')}</div>`;
-
-    // Expanded: keep structure but DO NOT show any participant names or lists
-    const expandedHtml = expanded
-      ? `
-        <div class="map-callout__expand" aria-hidden="true">
-          <div class="map-callout__wg-panels">
-            <div class="map-callout__wg-panel">
-              <h4>${escapeHtml(t('wg1') || 'WG1')}</h4>
-            </div>
-            <div class="map-callout__wg-panel">
-              <h4>${escapeHtml(t('wg2') || 'WG2')}</h4>
-            </div>
-            <div class="map-callout__wg-panel">
-              <h4>${escapeHtml(t('wg3') || 'WG3')}</h4>
-            </div>
-          </div>
-        </div>
-      `
-      : '';
-
-    state.calloutEl.innerHTML = `
-      <div class="map-callout__title-row">
-        <div class="map-callout__title">${escapeHtml(data.name)}</div>
-        ${leadershipBadge}
-      </div>
-      ${leadersHtml}
-      ${pillsHtml}
-      ${memberStat}
-      ${expandedHtml}
-    `;
+    state.calloutEl.innerHTML = html;
   }
+
 
   function pillSpan(key, label, isPresent) {
     const classes = [
@@ -667,6 +643,40 @@
     window.addEventListener('resize', onResize, { passive: true });
   }
 
+  //======== Added Render Table ================= 
+
+function renderTable(data) {
+    const tbody = document.querySelector('.data-table tbody');
+    const thead = document.querySelector('.data-table thead tr');
+    if (!tbody || !thead) return;
+
+    // Headers: Country | Management Committee
+    thead.innerHTML = `
+      <th scope="col" style="width: 30%">Participating Country</th>
+      <th scope="col">Management Committee Member(s)</th>
+    `;
+
+    // Sort by Country
+    data.sort((a, b) => (a.name || '').localeCompare(b.name));
+
+    const rows = data.map(c => {
+      let mcContent = '<span style="color:var(--text-muted); font-style:italic;">—</span>';
+      if (c.mc && c.mc.length > 0) {
+        mcContent = `<ul style="list-style:none; padding:0; margin:0;">
+          ${c.mc.map(p => `<li><strong>${escapeHtml(p.name)}</strong> <span style="opacity:0.7">(${escapeHtml(p.role)})</span></li>`).join('')}
+        </ul>`;
+      }
+      return `<tr>
+        <td><strong>${escapeHtml(c.name)}</strong></td>
+        <td>${mcContent}</td>
+      </tr>`;
+    }).join('');
+
+    tbody.innerHTML = rows;
+    
+    const tfoot = document.querySelector('.data-table tfoot');
+    if(tfoot) tfoot.remove();
+  }
   // ======== Export ========
   window.PlantWallKMap = { render: renderMap };
 })();

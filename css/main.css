@@ -649,7 +649,10 @@ a:hover { color: var(--color-link-hover); }
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--surface-saturation, 120%));
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-xl);
-  padding: var(--space-6);
+  padding: var(--space-8); /* Larger padding */
+  min-height: 320px; /* Make card larger */
+  display: flex;
+  flex-direction: column;
   transition: all var(--transition-fast);
   position: relative;
   overflow: visible;
@@ -673,8 +676,30 @@ a:hover { color: var(--color-link-hover); }
 .wg-badge--wg2 { background: var(--color-wg2-bg); color: var(--color-wg2); }
 .wg-badge--wg3 { background: var(--color-wg3-bg); color: var(--color-wg3); }
 
-.wg-card__title { font-size: var(--text-lg); margin-bottom: var(--space-2); }
-.wg-card__summary { font-size: var(--text-sm); color: var(--text-secondary); }
+.wg-card__title {
+  font-size: var(--text-xl); /* Larger title */
+  margin-bottom: var(--space-4);
+  color: var(--color-accent); /* Make it pop */
+}
+
+.wg-card__summary {
+  font-size: var(--text-base); /* Larger description */
+  color: var(--text-primary); /* Higher contrast */
+  font-weight: 500;
+  margin-bottom: var(--space-6); /* Space before details */
+  order: -1; /* Ensure summary is visually prominent (though DOM order is fine too) */
+}
+
+/* Style the "details" marker/button text */
+.wg-card details summary {
+  color: var(--color-link);
+  font-weight: 700;
+  transition: color 0.2s;
+}
+.wg-card details summary:hover {
+  color: var(--color-link-hover);
+  text-decoration: underline;
+}
 
 /* Toggle button on each card */
 .wg-card__toggle {
@@ -789,12 +814,14 @@ a:hover { color: var(--color-link-hover); }
 }
 
 .wg-universe__eyebrow {
-  font-size: var(--text-xs);
+  font-size: var(--text-xl); /* Slightly larger */
+  font-weight: 700; /* Bold */
   text-transform: uppercase;
-  letter-spacing: 0.16em;
-  color: var(--text-muted);
+  color: var(--color-accent); /* Color pop */
+  letter-spacing: 0.05em;
   margin-bottom: var(--space-2);
 }
+
 
 .wg-universe__title { font-size: var(--text-2xl); letter-spacing: -0.04em; margin-bottom: var(--space-3); }
 .wg-universe__copy { font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: var(--space-4); }

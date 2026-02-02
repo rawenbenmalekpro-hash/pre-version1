@@ -1,0 +1,189 @@
+[
+  {
+    "code": "AL",
+    "name": "Albania",
+    "mc": [
+      { "name": "Festim Kodra", "role": "MC Member", "institution": "Mediterranean University of Albania" },
+      { "name": "Dolantina Hyka", "role": "MC Member", "institution": "Mediterranean University of Albania" }
+    ]
+  },
+  {
+    "code": "BE",
+    "name": "Belgium",
+    "mc": []
+  },
+  {
+    "code": "BA",
+    "name": "Bosnia and Herzegovina",
+    "mc": [
+      { "name": "Sonja Umićević", "role": "MC Member", "institution": "University of Banja Luka Institute of Genetic Resources" },
+      { "name": "Biljana Kukavica", "role": "MC Member", "institution": "Faculty of Natural Science and Mathematics University of Banja Luka" }
+    ]
+  },
+  {
+    "code": "CY",
+    "name": "Cyprus",
+    "mc": []
+  },
+  {
+    "code": "CZ",
+    "name": "Czech Republic",
+    "mc": [
+      { "name": "Kateřina Schwarzerová", "role": "Action Chair", "institution": "Univerzita Karlova" },
+      { "name": "Barbara Zitova", "role": "MC Member", "institution": "Ustav Teorie Informace A Automatizace Av Cr Vvi" },
+      { "name": "Zuzana Burdikova", "role": "MC Member", "institution": "Univerzita Karlova" }
+    ]
+  },
+  {
+    "code": "DK",
+    "name": "Denmark",
+    "mc": [
+      { "name": "Peter Ulvskov", "role": "MC Member", "institution": "University of Copenhagen" }
+    ]
+  },
+  {
+    "code": "EG",
+    "name": "Egypt",
+    "mc": []
+  },
+  {
+    "code": "FI",
+    "name": "Finland",
+    "mc": []
+  },
+  {
+    "code": "FR",
+    "name": "France",
+    "mc": [
+      { "name": "Grégory Mouille", "role": "MC Member", "institution": "INRAE Centre Ile-de-France - Versailles-Saclay" },
+      { "name": "Charlotte Kirchhelle", "role": "MC Member", "institution": "INRAE Centre Lyon-Grenoble Auvergne-Rhône-Alpes" }
+    ]
+  },
+  {
+    "code": "DE",
+    "name": "Germany",
+    "mc": [
+      { "name": "Katharina Buerstenbinder", "role": "MC Member", "institution": "Philipps Universitaet Marburg" },
+      { "name": "René Schneider", "role": "MC Member", "institution": "University of Potsdam" }
+    ]
+  },
+  {
+    "code": "GR",
+    "name": "Greece",
+    "mc": [
+      { "name": "Zoe Hilioti", "role": "MC Member", "institution": "Centre for Research and Technology Hellas (CERTH)" }
+    ]
+  },
+  {
+    "code": "IE",
+    "name": "Ireland",
+    "mc": [
+      { "name": "Joseph OMahony", "role": "MC Member", "institution": "South East Technological University" },
+      { "name": "Atikur Rahman", "role": "MC Member", "institution": "Teagasc - Agriculture And Food Development Authority" }
+    ]
+  },
+  {
+    "code": "IL",
+    "name": "Israel",
+    "mc": [
+      { "name": "Maya Kleiman", "role": "MC Member", "institution": "Agricultural Research Organization - Volcani Institute" },
+      { "name": "Rivka Elbaum", "role": "MC Member", "institution": "Hebrew University of Jerusalem" }
+    ]
+  },
+  {
+    "code": "IT",
+    "name": "Italy",
+    "mc": []
+  },
+  {
+    "code": "XK",
+    "name": "Kosovo",
+    "mc": []
+  },
+  {
+    "code": "LT",
+    "name": "Lithuania",
+    "mc": []
+  },
+  {
+    "code": "NL",
+    "name": "Netherlands",
+    "mc": [
+      { "name": "Ilja Voets", "role": "MC Member", "institution": "Eindhoven University of Technology" }
+    ]
+  },
+  {
+    "code": "PS",
+    "name": "Palestinian Territories",
+    "mc": []
+  },
+  {
+    "code": "PL",
+    "name": "Poland",
+    "mc": [
+      { "name": "Dorota Kwiatkowska", "role": "MC Member", "institution": "University of Silesia in Katowice" }
+    ]
+  },
+  {
+    "code": "PT",
+    "name": "Portugal",
+    "mc": [
+      { "name": "Paula Sampaio", "role": "MC Member", "institution": "I3s - Instituto De Investigacao E Inovacao Em Saude Da Universidade Do Porto" },
+      { "name": "Ana Campilho", "role": "MC Member", "institution": "Associação BIOPOLIS" }
+    ]
+  },
+  {
+    "code": "RS",
+    "name": "Serbia",
+    "mc": [
+      { "name": "Marija Vidović", "role": "MC Member", "institution": "Institut Za Molekularnu Genetiku I Geneticko Inzenjerstvo" },
+      { "name": "Milica Perović", "role": "MC Member", "institution": "Tehnoloski Fakultet Novi Sad" }
+    ]
+  },
+  {
+    "code": "SK",
+    "name": "Slovakia",
+    "mc": [
+      { "name": "Jozef Mravec", "role": "Action Vice-Chair", "institution": "Slovenska Akademia Vied" },
+      { "name": "Jaroslav Durkovic", "role": "MC Member", "institution": "Technical University in Zvolen" }
+    ]
+  },
+  {
+    "code": "ES",
+    "name": "Spain",
+    "mc": [
+      { "name": "Miguel Botella", "role": "MC Member", "institution": "Instituto de Hortofruticultura Subtropical y Mediterránea \"La Mayora\"" },
+      { "name": "Clara Sanchez-Rodriguez", "role": "MC Member", "institution": "Centro de Biotecnología y Genómica de Plantas" }
+    ]
+  },
+  {
+    "code": "SE",
+    "name": "Sweden",
+    "mc": [
+      { "name": "Laura Bacete", "role": "MC Member", "institution": "Umea University" },
+      { "name": "Stéphane Verger", "role": "MC Member", "institution": "Umea Universitet" }
+    ]
+  },
+  {
+    "code": "TR",
+    "name": "Türkiye",
+    "mc": [
+      { "name": "Sureyya Ozcan", "role": "MC Member", "institution": "Middle East Technical University" },
+      { "name": "Selman Uluışık", "role": "MC Member", "institution": "Burdur Mehmet Akif Ersoy University" }
+    ]
+  },
+  {
+    "code": "UA",
+    "name": "Ukraine",
+    "mc": [
+      { "name": "Alla Yemets (Iemets)", "role": "MC Member", "institution": "Institute of Food Biotechnology and Genomics, National Academy of Sciences of Ukraine" }
+    ]
+  },
+  {
+    "code": "GB",
+    "name": "United Kingdom",
+    "mc": [
+      { "name": "Maurice Bosch", "role": "MC Member", "institution": "Aberystwyth University" }
+    ]
+  }
+]

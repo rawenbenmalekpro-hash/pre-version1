@@ -668,65 +668,113 @@ a:hover { color: var(--color-link-hover); }
   }
 }
 
-/* WG Card Premium Styling */
-.wg-card {
-  /* Existing glass styles maintained, adding accent top border */
-  border-top-width: 4px; 
+/* === WG Console (Tabbed Interface) === */
+.wg-console {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-height: 600px; /* Prevent layout jump */
+}
+
+/* Nav Deck */
+.wg-console__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  padding: var(--space-2);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(12px);
   position: relative;
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  z-index: 2;
 }
 
-.wg-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--surface-shadow);
+.wg-console__tab {
+  flex: 1 1 200px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  overflow: hidden;
 }
 
-/* Distinct accents per WG */
+/* Tab Indicator (Glowing Bar) */
+.wg-console__indicator {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--accent);
+  opacity: 0;
+  transform: scaleX(0.5);
+  transition: all var(--transition-base);
+}
+
+/* Hover/Active States */
+.wg-console__tab:hover {
+  background: var(--bg-glass-hover);
+}
+
+.wg-console__tab:hover .wg-console__indicator {
+  opacity: 0.5;
+  transform: scaleX(0.7);
+}
+
+.wg-console__tab[aria-selected="true"] {
+  background: var(--bg-surface-elevated);
+  border-color: var(--border-subtle);
+  box-shadow: var(--shadow-sm);
+}
+
+.wg-console__tab[aria-selected="true"] .wg-console__indicator {
+  opacity: 1;
+  transform: scaleX(1);
+  box-shadow: 0 0 10px var(--accent);
+}
+
+.wg-console__label {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.wg-console__tab[aria-selected="true"] .wg-console__label {
+  color: var(--text-primary);
+}
+
+/* Viewport & Cards */
+.wg-console__viewport {
+  position: relative;
+}
+
+.wg-card {
+  /* Hide by default in console mode */
+  display: none;
+  border-top-width: 4px; /* Accent border */
+  animation: fadeScaleIn 0.3s ease-out;
+}
+
+.wg-card.is-active {
+  display: flex; /* Flex required for layout */
+}
+
+/* WG Specific Accents */
 #wg1 { border-top-color: var(--color-wg1); }
 #wg2 { border-top-color: var(--color-wg2); }
 #wg3 { border-top-color: var(--color-wg3); }
 
-/* === Premium About Section === */
-/* Intro Text ("Manifesto") */
-[data-section="learn-more"] .glass-card > p {
-  font-size: 1.15rem; /* Larger text */
-  line-height: 1.7;
-  color: var(--text-primary);
-  padding-left: var(--space-4);
-  border-left: 3px solid var(--color-accent);
-  margin-bottom: var(--space-5);
-}
-
-/* Data Modules (Mission/Scope/Instruments) */
-[data-section="learn-more"] .grant-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--space-4);
-  margin-top: var(--space-8);
-}
-
-[data-section="learn-more"] .grant-card {
-  background: rgba(15, 23, 42, 0.6); /* Darker, technical look */
-  border: 1px solid rgba(255,255,255,0.08);
-  backdrop-filter: blur(12px);
-}
-
-[data-section="learn-more"] .grant-card h3 {
-  font-family: monospace;
-  text-transform: uppercase;
-  font-size: 0.85rem;
-  letter-spacing: 0.15em;
-  color: var(--color-accent);
-  opacity: 0.9;
-  margin-bottom: var(--space-4);
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  padding-bottom: var(--space-2);
-}
-
-[data-section="learn-more"] details summary {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--text-primary);
+/* Animation */
+@keyframes fadeScaleIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* === Home Registrations Grid === */

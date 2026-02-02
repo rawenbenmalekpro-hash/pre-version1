@@ -230,6 +230,9 @@ function processMapData(data) {
     state.pathGenerator = d3.geoPath().projection(state.projection);
   }
 
+
+  //========= Draw Countries ========== */
+
   function drawCountries() {
     // Non-participating countries
     state.g.selectAll('.map-country')
@@ -240,16 +243,32 @@ function processMapData(data) {
       .attr('d', state.pathGenerator);
 
     // Participating countries (highlighted)
-    state.g.selectAll('.map-country--participating')
+    const participatingPaths = state.g.selectAll('.map-country--participating')
       .data(state.participatingFeatures)
       .enter()
       .append('path')
       .attr('class', 'map-country map-country--participating')
       .attr('d', state.pathGenerator);
+
+    // Add interaction to the country shapes themselves (for countries without markers)
+    participatingPaths.on('mouseenter', (e, d) => {
+      const code = d.properties.iso2;
+      // Only trigger if not pinned
+      if (!state.pinnedCode) showCallout(code, { pin: false, expanded: false });
+    });
+    participatingPaths.on('mouseleave', () => {
+      if (!state.pinnedCode) hideCallout();
+    });
+    participatingPaths.on('click', (e, d) => {
+      e.stopPropagation();
+      togglePinnedExpanded(d.properties.iso2);
+    });
   }
 
+
+
   // ======== Markers ======== */
-  function drawMarkers() {
+function drawMarkers() {
     const markersG = state.g.append('g').attr('class', 'markers-layer');
 
     state.participatingFeatures.forEach(f => {
@@ -260,6 +279,13 @@ function processMapData(data) {
       const centroid = state.pathGenerator.centroid(f);
       if (!centroid || isNaN(centroid[0])) return;
 
+      // FIX: Shift Israel marker West to uncover Palestine (PS)
+      if (code === 'IL') {
+        centroid[1] += 10; 
+      }
+      
+
+      // Calculate radius based on members (kept for scaling logic if needed later, or fixed)
       const members = data.members || 1;
       const scale = clamp(
         CONFIG.marker.minScale +
@@ -271,6 +297,20 @@ function processMapData(data) {
       );
       const r = CONFIG.marker.baseRadius * scale;
 
+      // 1. ALWAYS register metadata so the callout knows where to point (even if marker is invisible)
+      state.markerMeta.set(code, {
+        x: centroid[0],
+        y: centroid[1],
+        r,
+        data,
+        markerEl: null // Will update if we draw it
+      });
+
+      // 2. CHECK: Only draw visible marker if MC members exist
+      const hasMC = data.mc && data.mc.length > 0;
+      if (!hasMC) return; // Stop here for non-MC countries (they rely on drawCountries events)
+
+      // 3. Draw Marker for MC countries
       const wgPresence = {
         wg1: Boolean(data.wg1),
         wg2: Boolean(data.wg2),
@@ -297,9 +337,12 @@ function processMapData(data) {
         .attr('data-code', code)
         .attr('transform', `translate(${centroid[0]}, ${centroid[1]})`);
 
+      // Update meta with the element
+      state.markerMeta.get(code).markerEl = markerG;
+
       const body = markerG.append('g').attr('class', 'map-marker__body');
 
-      // WG presence rings (outermost first to avoid jitter)
+      // WG presence rings
       const ringsGroup = body.append('g').attr('class', 'marker-rings');
       const wgKeys = ['wg1', 'wg2', 'wg3'];
       let ringIndex = 0;
@@ -326,14 +369,6 @@ function processMapData(data) {
       body.append('circle')
         .attr('class', 'marker-core')
         .attr('r', r);
-
-      state.markerMeta.set(code, {
-        x: centroid[0],
-        y: centroid[1],
-        r,
-        data,
-        markerEl: markerG
-      });
 
       // Events
       markerG.on('mouseenter', () => {
@@ -365,7 +400,7 @@ function processMapData(data) {
       });
     });
 
-    // Click outside to close pinned
+    // Click outside handler remains same...
     state.svg.on('click', () => {
       if (state.pinnedCode) {
         state.pinnedCode = null;
@@ -382,6 +417,7 @@ function processMapData(data) {
       }
     }, true);
   }
+
 
   // ======== Callout Layer ========
   function initCallout() {

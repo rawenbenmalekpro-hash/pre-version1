@@ -24,6 +24,13 @@
       margin: 0;
     }
   </style>
+
+  <script>
+  (function() {
+    const savedTheme = localStorage.getItem('plantwallk-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  })();
+  </script>
 </head>
 <body>
   <main class="content-surface content-surface--wide" style="margin: 4rem auto;">

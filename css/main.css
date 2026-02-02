@@ -644,18 +644,47 @@ a:hover { color: var(--color-link-hover); }
   gap: var(--space-6);
 }
 
+.wg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-8);
+  align-items: stretch;
+}
+
 .wg-card {
   background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur)) saturate(var(--surface-saturation, 120%));
+  backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-xl);
-  padding: var(--space-8); /* Larger padding */
-  min-height: 320px; /* Make card larger */
+  padding: var(--space-8);
   display: flex;
   flex-direction: column;
-  transition: all var(--transition-fast);
-  position: relative;
-  overflow: visible;
+  height: 100%;
+}
+
+.wg-card__description {
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-6);
+  flex-grow: 1;
+}
+
+.wg-card__details summary {
+  color: var(--color-link);
+  font-weight: 600;
+  cursor: pointer;
+  padding: var(--space-2) 0;
+}
+
+.wg-card__toggle {
+  margin-top: auto; /* Aligns buttons at the bottom across cards */
+}
+
+/* Learn More Restyle */
+.grant-cards[aria-label="Mission scope instruments"] .grant-card {
+  border-left: 4px solid var(--color-accent);
+  background: var(--content-surface-bg);
 }
 
 .wg-card:hover { box-shadow: var(--shadow-lg); }

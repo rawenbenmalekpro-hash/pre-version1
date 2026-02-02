@@ -9,12 +9,11 @@
     "_comment": "Theme-aware background map. Keys MUST match data-bg values in HTML: hero, about, wg, grants",
     "dark": {
     "_comment": "Dark theme backgrounds (milestone 4 assets).",
-    "hero": [
+    "hero":
         "./images/pea_root_cap.webp",
-        "./images/triangular junctions.png"
-      ],
-      "about": ["./images/micrasterias_cos_488_1_day_post_label.webp",
-    "./images/bg-grants"],
+
+      "about": "./images/micrasterias_cos_488_1_day_post_label.webp",
+
       "wg": "./images/cover_art_pea_root_apex.webp",
       "grants": "./images/cyrotmium_root_20x.jpg",
       "activities" : "./images/arabidopsis root stained with pectin probe.png"

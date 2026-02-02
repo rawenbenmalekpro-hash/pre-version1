@@ -6,20 +6,21 @@
   <style>
     .epcc-header {
       background: url('./images/micrasterias_cos_488_1_day_post_label.webp') center/cover;
-      height: 200px;
+      height: 220px;
       border-radius: var(--radius-xl);
-      margin-bottom: 2rem;
+      margin-bottom: var(--space-8);
       position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
     }
     .epcc-header::after {
       content: '';
-      position: absolute; inset:0;
-      background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.8));
-      border-radius: inherit;
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.9) 100%);
     }
     .epcc-title {
-      position: absolute; bottom: 1.5rem; left: 1.5rem; z-index: 2;
-      color: white; text-shadow: 0 2px 4px black;
+      position: absolute; bottom: var(--space-6); left: var(--space-6); z-index: 2;
+      color: white; text-shadow: 0 2px 8px rgba(0,0,0,0.8);
       margin: 0;
     }
   </style>
@@ -28,48 +29,77 @@
   <main class="content-surface content-surface--wide" style="margin: 4rem auto;">
     
     <div class="epcc-header">
-      <h1 class="epcc-title">European Plant Cytoskeletal Club<br><span style="font-size:0.6em; opacity:0.9">Satellite Meeting · May 26–27</span></h1>
+      <h1 class="epcc-title">European Plant Cytoskeletal Club<br><span style="font-size:0.6em; opacity:0.9; font-weight:400">Satellite Meeting · May 26–27</span></h1>
     </div>
 
-    <form id="epcc-form" onsubmit="submitForm(event, 'epcc')" style="display:grid; gap:1.5rem;">
-      <label class="form-group"><span>Name</span><input type="text" name="name" required></label>
-      
-      <div class="form-group">
-        <span>Member of COST PlantWallK?</span>
-        <label><input type="radio" name="is_member" value="true" required> Yes</label>
-        <label><input type="radio" name="is_member" value="false"> No</label>
+    <form id="epcc-form" onsubmit="submitForm(event, 'epcc')">
+      <div class="form-grid form-grid--2-col">
+        <label class="form-group">
+          <span class="form-label">First Name</span>
+          <input type="text" name="firstName" class="input-field" required>
+        </label>
+        <label class="form-group">
+          <span class="form-label">Surname</span>
+          <input type="text" name="surname" class="input-field" required>
+        </label>
       </div>
 
-      <label class="form-group"><span>Affiliation</span><input type="text" name="affiliation" required></label>
+      <div class="form-grid">
+        <div class="form-group">
+          <span class="form-label">Member of COST PlantWallK?</span>
+          <div class="radio-group">
+            <label class="radio-label"><input type="radio" name="is_member" value="true" required> Yes</label>
+            <label class="radio-label"><input type="radio" name="is_member" value="false"> No</label>
+          </div>
+        </div>
 
-      <div class="form-group">
-        <span>Role</span>
-        <label><input type="radio" name="role" value="student" required> Student</label>
-        <label><input type="radio" name="role" value="researcher"> Researcher</label>
+        <label class="form-group">
+          <span class="form-label">Affiliation</span>
+          <input type="text" name="affiliation" class="input-field" required>
+        </label>
+
+        <div class="form-group">
+          <span class="form-label">Role</span>
+          <div class="radio-group">
+            <label class="radio-label"><input type="radio" name="role" value="student" required> Student</label>
+            <label class="radio-label"><input type="radio" name="role" value="researcher"> Researcher</label>
+          </div>
+        </div>
+
+        <label class="form-group">
+          <span class="form-label">Title of Contribution</span>
+          <input type="text" name="title" class="input-field" required>
+        </label>
+
+        <label class="form-group">
+          <span class="form-label">Abstract</span>
+          <textarea name="abstract" rows="5" class="input-field" required></textarea>
+        </label>
+
+        <label class="form-group">
+          <span class="form-label">Format</span>
+          <select name="type" class="input-field" required>
+            <option value="" disabled selected>Select format...</option>
+            <option value="lecture">Lecture (15+5 min)</option>
+            <option value="poster">Poster</option>
+          </select>
+        </label>
+
+        <label class="form-group">
+          <span class="form-label">Planned Presence</span>
+          <select name="presence" class="input-field" required>
+            <option value="" disabled selected>Select duration...</option>
+            <option value="3_days">May 25-27 (COST + EPCC)</option>
+            <option value="2_days">May 26-27 (COST Day 2 + EPCC)</option>
+            <option value="1_day">May 27 (EPCC Only)</option>
+          </select>
+        </label>
       </div>
 
-      <label class="form-group"><span>Title</span><input type="text" name="title" required></label>
-      <label class="form-group"><span>Abstract</span><textarea name="abstract" rows="5" required></textarea></label>
-
-      <div class="form-group">
-        <span>Format</span>
-        <select name="type" required>
-          <option value="lecture">Lecture (15+5 min)</option>
-          <option value="poster">Poster</option>
-        </select>
+      <div class="hero__cta" style="margin-top: var(--space-8)">
+        <button type="submit" class="btn btn--primary btn--large">Register for EPCC</button>
       </div>
-
-      <div class="form-group">
-        <span>Planned Presence</span>
-        <select name="presence" required>
-          <option value="3_days">May 25-27 (COST + EPCC)</option>
-          <option value="2_days">May 26-27 (COST Day 2 + EPCC)</option>
-          <option value="1_day">May 27 (EPCC Only)</option>
-        </select>
-      </div>
-
-      <button type="submit" class="btn btn--primary">Register for EPCC</button>
-      <div class="form-message" hidden></div>
+      <div class="form-message" hidden style="margin-top:var(--space-4)"></div>
     </form>
   </main>
   <script src="./js/forms.js"></script>

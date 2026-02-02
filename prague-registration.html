@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"> <head>
   <title>Prague Meeting Registration - PlantWallK</title>
   <link rel="stylesheet" href="./css/main.css">
   <link rel="stylesheet" href="./css/themes.css">
@@ -9,44 +8,57 @@
   <main class="content-surface content-surface--wide" style="margin: 4rem auto;">
     <h2>Prague Meeting Registration</h2>
     
-    <form id="prague-form" onsubmit="submitForm(event, 'prague')" style="display:grid; gap:1.5rem; max-width:600px;">
+    <form id="prague-form" onsubmit="submitForm(event, 'prague')">
       
-      <label class="form-group">
-        <span>Full Name</span>
-        <input type="text" name="name" required placeholder="Dr. Jane Doe">
-      </label>
-
-      <label class="form-group">
-        <span>Affiliation / Address</span>
-        <input type="text" name="affiliation" required>
-      </label>
-
-      <div class="form-group">
-        <span>YRI Status (Young Researcher & Innovator)</span>
-        <label><input type="radio" name="yri_status" value="true" required> Yes (< 40 years old)</label>
-        <label><input type="radio" name="yri_status" value="false"> No</label>
+      <div class="form-grid form-grid--2-col">
+        <label class="form-group">
+          <span class="form-label">First Name</span>
+          <input type="text" name="firstName" class="input-field" required placeholder="Jane">
+        </label>
+        <label class="form-group">
+          <span class="form-label">Surname</span>
+          <input type="text" name="surname" class="input-field" required placeholder="Doe">
+        </label>
       </div>
 
-      <label class="form-group">
-        <span>Title of Contribution</span>
-        <input type="text" name="title" required>
-      </label>
+      <div class="form-grid">
+        <label class="form-group">
+          <span class="form-label">Affiliation / Address</span>
+          <input type="text" name="affiliation" class="input-field" required>
+        </label>
 
-      <label class="form-group">
-        <span>Abstract</span>
-        <textarea name="abstract" rows="6" required placeholder="Short abstract..."></textarea>
-      </label>
+        <div class="form-group">
+          <span class="form-label">YRI Status (Young Researcher & Innovator)</span>
+          <div class="radio-group">
+            <label class="radio-label"><input type="radio" name="yri_status" value="true" required> Yes (< 40 years old)</label>
+            <label class="radio-label"><input type="radio" name="yri_status" value="false"> No</label>
+          </div>
+        </div>
 
-      <div class="form-group">
-        <span>Preference</span>
-        <select name="type" required>
-          <option value="lecture">Lecture (15+5 min)</option>
-          <option value="poster">Poster</option>
-        </select>
+        <label class="form-group">
+          <span class="form-label">Title of Contribution</span>
+          <input type="text" name="title" class="input-field" required>
+        </label>
+
+        <label class="form-group">
+          <span class="form-label">Abstract</span>
+          <textarea name="abstract" rows="6" class="input-field" required placeholder="Short abstract..."></textarea>
+        </label>
+
+        <label class="form-group">
+          <span class="form-label">Preference</span>
+          <select name="type" class="input-field" required>
+            <option value="" disabled selected>Select preference...</option>
+            <option value="lecture">Lecture (15+5 min)</option>
+            <option value="poster">Poster</option>
+          </select>
+        </label>
       </div>
 
-      <button type="submit" class="btn btn--primary">Submit Registration</button>
-      <div class="form-message" hidden></div>
+      <div class="hero__cta" style="margin-top: var(--space-8)">
+        <button type="submit" class="btn btn--primary btn--large">Submit Registration</button>
+      </div>
+      <div class="form-message" hidden style="margin-top:var(--space-4)"></div>
     </form>
   </main>
   <script src="./js/forms.js"></script>
